@@ -2,6 +2,7 @@ package com.myothiha.domain.usecases
 
 import com.myothiha.domain.model.Movie
 import com.myothiha.domain.utils.coroutine.CoroutineUseCase
+import com.myothiha.domain.utils.coroutine.DispatcherProvider
 import javax.inject.Inject
 
 /**
