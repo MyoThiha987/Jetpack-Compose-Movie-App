@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_app">Something went wrong..App</string>
+    <string name="error_generic">Something went wrong.Try again later.</string>
+    <string name="error_no_internet">No internet connection.</string>
+    <string name="error_socket_timeout">Connection timeout.</string>
+    <string name="error_server_500">Server error occurs.Try again later.</string>
+    <string name="error_server_404">Server not found.</string>
+    <string name="error_http">Server error occurs.Try again later.</string>
+    <string name="error_400">400</string>
+    <string name="error_401">401</string>
+    <string name="error_4022">422</string>
+    <string name="error_403">403</string>
+</resources>
