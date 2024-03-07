@@ -3,6 +3,7 @@ package com.myothiha.appbase.di
 import com.myothiha.appbase.dispatcher.DefaultDispatcherProvider
 import com.myothiha.appbase.exception.ExceptionMapper
 import com.myothiha.appbase.exception.ExceptionMapperImpl
+import com.myothiha.domain.utils.coroutine.DispatcherProvider
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
