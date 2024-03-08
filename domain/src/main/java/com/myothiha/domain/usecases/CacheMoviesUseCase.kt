@@ -2,8 +2,8 @@ package com.myothiha.domain.usecases
 
 import com.myothiha.domain.model.Movie
 import com.myothiha.domain.repository.MoviesRepository
-import com.myothiha.domain.utils.coroutine.CoroutineUseCase
 import com.myothiha.domain.utils.coroutine.DispatcherProvider
+import com.myothiha.domain.utils.coroutine.FlowUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class CacheMoviesUseCase @Inject constructor(
     private val repository: MoviesRepository,
     dispatcherProvider: DispatcherProvider
-) : CoroutineUseCase<Unit, Flow<List<Movie>>>(dispatcherProvider = dispatcherProvider) {
+) : FlowUseCase<Unit, List<Movie>>(dispatcherProvider = dispatcherProvider) {
     override suspend fun provide(params: Unit): Flow<List<Movie>> {
         return repository.retrieveMovies()
     }

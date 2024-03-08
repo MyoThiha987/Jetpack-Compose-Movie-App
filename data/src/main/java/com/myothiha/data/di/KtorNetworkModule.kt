@@ -4,12 +4,15 @@ import android.content.Context
 import android.util.Log
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.myothiha.data.network.dto.MovieDto
+import com.myothiha.data.network.response.DataResponse
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.HttpRequestRetry
@@ -74,22 +77,20 @@ object KtorNetworkModule {
                 level = LogLevel.BODY
             }
 
-            install(HttpRequestRetry) {
-                maxRetries = 1
-                delayMillis {
-                    1000
-                }
-            }
 
             install(ResponseObserver) {
                 onResponse { response ->
-                    Log.d("HTTP status:", "${response.status.value}")
+//Log.d("HTTP status:", "${response.status.value}")
+                    Log.d("HTTP status:", "${response.body<DataResponse<MovieDto>>()}")
                 }
             }
 
             install(DefaultRequest) {
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
-                header("Authorization", "Bearer edjjfjjffjfj")
+                header(
+                    "Authorization",
+                    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MWEzMWQzNWUwYTMyNzg1ZjJlNGM0NDk5ZjA0M2FlOCIsInN1YiI6IjVkYzM5NDBjOWQ4OTM5MDAxODM0YjVlZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Eve0FD4yriTnRWsCD0P2bTXplUlUObIIfs1Q5ChAdgc"
+                )
             }
 
             defaultRequest {

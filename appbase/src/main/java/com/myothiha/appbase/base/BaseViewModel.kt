@@ -8,7 +8,7 @@ import javax.inject.Inject
  * @Author myothiha
  * Created 05/03/2024 at 9:58 PM.
  **/
-abstract class BaseViewModel @Inject constructor() : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
     @Inject
     lateinit var exception: ExceptionMapper
 }

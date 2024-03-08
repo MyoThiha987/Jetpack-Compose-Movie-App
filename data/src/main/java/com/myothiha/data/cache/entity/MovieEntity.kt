@@ -1,6 +1,7 @@
 package com.myothiha.data.cache.entity
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 /**
  * @Author myothiha
@@ -9,6 +10,8 @@ import androidx.room.Entity
 
 @Entity(tableName = "movies")
 data class MovieEntity(
+    @PrimaryKey(autoGenerate = true)
+    val autoId: Int? = null,
     val id: Int,
     val originalTitle: String,
     val overview: String,

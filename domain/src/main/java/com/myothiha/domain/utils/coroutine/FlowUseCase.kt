@@ -1,6 +1,5 @@
 package com.myothiha.domain.utils.coroutine
 
-import com.mth.domain.coroutine.DispatcherProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 

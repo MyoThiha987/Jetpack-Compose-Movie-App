@@ -83,6 +83,5 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 [bundles]
 coroutine =["coroutines-android","coroutines-core","coroutines-play-services","coroutines-test","core-ktx"]
 room = ["room-ktx","room-runtime", "room-paging"]
-chucker = ["chucker-debug", "chucker-release"]
 ktor = ["ktor-client-android", "ktor-client-core", "ktor-client-negotiation", "ktor-client-okhttp", "ktor-logging"]
 

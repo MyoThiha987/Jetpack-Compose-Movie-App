@@ -1,5 +1,6 @@
 package com.myothiha.data.network.response
 
+import com.myothiha.data.network.dto.MovieDto
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -10,15 +11,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class DataResponse<T>(
-    @SerialName("page")
+    @SerialName(value ="page")
     val currentPage: Int?,
 
-    @SerialName("results")
+    @SerialName(value ="results")
     val data: List<T>?,
 
-    @SerialName("message")
-    val errorMessage: String?,
-
-    @SerialName("total_pages")
+    @SerialName(value ="total_pages")
     val totalPages: Int?
 )

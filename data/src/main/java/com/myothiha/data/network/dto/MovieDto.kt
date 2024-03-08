@@ -42,7 +42,7 @@ fun MovieDto.toEntity(): MovieEntity {
             releaseDate = releaseDate.orEmpty(),
             voteAverage = voteAverage.orZero(),
             voteCount = voteCount.orZero(),
-            movieType = -1,
+            movieType = 1,
             isLiked = false
         )
     }

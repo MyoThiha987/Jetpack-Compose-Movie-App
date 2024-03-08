@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.devToolsKsp)
     alias(libs.plugins.hiltAndroid)
+    alias(libs.plugins.kotlinXSerialization)
 }
 
 android {
@@ -12,7 +13,6 @@ android {
 
     defaultConfig {
         minSdk = 24
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -27,11 +27,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 
@@ -46,7 +46,8 @@ dependencies {
     ksp(libs.hilt.android.compiler)
     ksp(libs.room.compiler)
     implementation(libs.bundles.ktor)
-    implementation(libs.bundles.chucker)
+    debugImplementation(libs.chucker.debug)
+    releaseImplementation(libs.chucker.release)
     implementation(libs.serialization.kotlinx)
     implementation(libs.bundles.room)
     implementation(libs.bundles.coroutine)

@@ -8,6 +8,7 @@ import com.myothiha.appbase.base.BaseViewModel
 import com.myothiha.domain.model.Movie
 import com.myothiha.domain.usecases.CacheMoviesUseCase
 import com.myothiha.domain.usecases.SyncMoviesUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,17 +17,19 @@ import javax.inject.Inject
  * @Author myothiha
  * Created 07/03/2024 at 11:39 PM.
  **/
+
+@HiltViewModel
 class MoviesViewModel @Inject constructor(
     private val syncMoviesUseCase: SyncMoviesUseCase,
     private val cacheMoviesUseCase: CacheMoviesUseCase
 ) : BaseViewModel() {
 
+    var uiState by mutableStateOf(ScreenUiState())
+        private set
+
     init {
         syncMovies()
     }
-
-    var uiState by mutableStateOf(ScreenUiState())
-        private set
 
     fun onEvent(event: ScreenUiEvent) {
         when (event) {
@@ -34,12 +37,11 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
-    private fun syncMovies() {
+   private  fun syncMovies() {
         viewModelScope.launch {
             uiState = uiState.copy(isLoading = true)
             runCatching {
                 syncMoviesUseCase.execute(params = Unit)
-                uiState = uiState.copy(isLoading = false)
                 retrieveMovies()
             }
                 .getOrElse {

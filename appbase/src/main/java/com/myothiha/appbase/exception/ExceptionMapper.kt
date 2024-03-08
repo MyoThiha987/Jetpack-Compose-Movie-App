@@ -1,5 +1,5 @@
 package com.myothiha.appbase.exception
 
-import com.mth.appbase.exception.UnidirectionalMap
+import com.myothiha.appbase.exception.UnidirectionalMap
 
 interface ExceptionMapper : UnidirectionalMap<Throwable, String> {}
