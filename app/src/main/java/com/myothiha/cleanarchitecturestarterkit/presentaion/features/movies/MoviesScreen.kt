@@ -89,7 +89,7 @@ fun MoviesSection(uiState: ScreenUiState, modifier: Modifier = Modifier) {
                 }
             )
             CategoryNameAndMovies(
-                text = "NowPlaying",
+                text = "Popular",
                 content = {
                     HorizontalItemMovies(data = uiState.nowPlayingData) {
                         MovieItemMediumView(data = it)
