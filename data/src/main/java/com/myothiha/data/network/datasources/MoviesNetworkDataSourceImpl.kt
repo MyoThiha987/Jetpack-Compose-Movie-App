@@ -1,6 +1,5 @@
 package com.myothiha.data.network.datasources
 
-import android.util.Log
 import com.myothiha.data.datasources.MoviesNetworkDataSource
 import com.myothiha.data.network.dto.MovieDto
 import com.myothiha.data.network.response.DataResponse
@@ -19,13 +18,39 @@ import javax.inject.Inject
 class MoviesNetworkDataSourceImpl @Inject constructor(
     private val client: HttpClient
 ) : MoviesNetworkDataSource {
-    override suspend fun fetchMovies(): List<MovieDto> {
+    override suspend fun fetchNowPlayingMovies(): List<MovieDto> {
         val data = client.get {
-            url(Constants.GET_TOP_RATED)
-            parameter("language", "US")
+            url(Constants.GET_NOW_PLAYING)
+            parameter("language", "en")
             parameter("page", 1)
         }.body<DataResponse<MovieDto>>()
-        Log.d("DATA_NET", data.data.orEmpty().toString())
+        return data.data.orEmpty()
+    }
+
+    override suspend fun fetchTopRatedMovies(): List<MovieDto> {
+        val data = client.get {
+            url(Constants.GET_TOP_RATED)
+            parameter("language", "en")
+            parameter("page", 1)
+        }.body<DataResponse<MovieDto>>()
+        return data.data.orEmpty()
+    }
+
+    override suspend fun fetchPopularMovies(): List<MovieDto> {
+        val data = client.get {
+            url(Constants.GET_POPULAR)
+            parameter("language", "en")
+            parameter("page", 1)
+        }.body<DataResponse<MovieDto>>()
+        return data.data.orEmpty()
+    }
+
+    override suspend fun fetchUpcomingMovies(): List<MovieDto> {
+        val data = client.get {
+            url(Constants.GET_UPCOMING)
+            parameter("language", "en")
+            parameter("page", 1)
+        }.body<DataResponse<MovieDto>>()
         return data.data.orEmpty()
     }
 }

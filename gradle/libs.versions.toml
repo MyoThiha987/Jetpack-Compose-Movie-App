@@ -24,6 +24,8 @@ hilt_navigation_compose = "1.2.0"
 navigation_compose = "2.7.7"
 appcompat = "1.6.1"
 material = "1.11.0"
+accompanish-pager-indicator = "0.28.0"
+
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -70,6 +72,8 @@ hilt_navigation_compose = { group = "androidx.hilt", name = "hilt-navigation-com
 navigation_compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation_compose" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+accompanish-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanish-pager-indicator" }
+accompanish-pager-indicator = { group = "com.google.accompanist", name = "accompanist-pager-indicators", version.ref = "accompanish-pager-indicator" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -84,4 +88,4 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 coroutine =["coroutines-android","coroutines-core","coroutines-play-services","coroutines-test","core-ktx"]
 room = ["room-ktx","room-runtime", "room-paging"]
 ktor = ["ktor-client-android", "ktor-client-core", "ktor-client-negotiation", "ktor-client-okhttp", "ktor-logging"]
-
+accompanish-pager =["accompanish-pager","accompanish-pager-indicator"]

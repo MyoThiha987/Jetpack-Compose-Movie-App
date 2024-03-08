@@ -17,7 +17,7 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saverMovies(data: List<MovieEntity>)
 
-    @Query("SELECT * from movies WHERE movieType IN (1)")
+    @Query("SELECT * from movies")
     fun retrieveCacheMovies(): Flow<List<MovieEntity>>
 
     @Query("UPDATE movies SET isLiked=:isLiked WHERE id=:movieId")

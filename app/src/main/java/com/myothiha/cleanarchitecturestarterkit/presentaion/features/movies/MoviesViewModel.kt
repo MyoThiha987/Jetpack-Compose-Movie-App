@@ -37,7 +37,7 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
-   private  fun syncMovies() {
+    private fun syncMovies() {
         viewModelScope.launch {
             uiState = uiState.copy(isLoading = true)
             runCatching {
@@ -54,7 +54,14 @@ class MoviesViewModel @Inject constructor(
     private fun retrieveMovies() {
         viewModelScope.launch {
             cacheMoviesUseCase.execute(params = Unit).collectLatest {
-                uiState = uiState.copy(isLoading = false, data = it)
+                val groupedMovies = it.groupBy { it.movieType }
+                uiState = uiState.copy(
+                    isLoading = false,
+                    upcomingData = groupedMovies[1] ?: emptyList(),
+                    nowPlayingData = groupedMovies[2] ?: emptyList(),
+                    topRatedData = groupedMovies[3] ?: emptyList(),
+                    popularData = groupedMovies[4] ?: emptyList()
+                )
             }
         }
     }
@@ -66,6 +73,9 @@ sealed class ScreenUiEvent {
 
 data class ScreenUiState(
     var isLoading: Boolean = false,
-    var data: List<Movie> = emptyList(),
+    val upcomingData: List<Movie> = emptyList(),
+    val nowPlayingData: List<Movie> = emptyList(),
+    val topRatedData: List<Movie> = emptyList(),
+    val popularData: List<Movie> = emptyList(),
     var errorMessage: String? = null
 )

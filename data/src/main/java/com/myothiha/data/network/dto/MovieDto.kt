@@ -31,7 +31,7 @@ data class MovieDto(
     val voteCount: Int?
 )
 
-fun MovieDto.toEntity(): MovieEntity {
+fun MovieDto.toEntity(movieType: Int): MovieEntity {
     this.apply {
         return MovieEntity(
             id = id.orZero(),
@@ -42,7 +42,7 @@ fun MovieDto.toEntity(): MovieEntity {
             releaseDate = releaseDate.orEmpty(),
             voteAverage = voteAverage.orZero(),
             voteCount = voteCount.orZero(),
-            movieType = 1,
+            movieType = movieType,
             isLiked = false
         )
     }
@@ -59,7 +59,7 @@ fun MovieEntity.toDomain(): Movie {
             releaseDate = releaseDate,
             voteAverage = voteAverage,
             voteCount = voteCount,
-            movieType = -1,
+            movieType = movieType,
             isLiked = false
         )
     }

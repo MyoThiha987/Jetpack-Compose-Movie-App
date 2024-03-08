@@ -7,6 +7,9 @@ import com.myothiha.data.network.dto.MovieDto
  * Created 05/03/2024 at 8:56 PM.
  **/
 interface MoviesNetworkDataSource {
-    suspend fun fetchMovies(): List<MovieDto>
+    suspend fun fetchNowPlayingMovies(): List<MovieDto>
+    suspend fun fetchTopRatedMovies(): List<MovieDto>
+    suspend fun fetchPopularMovies(): List<MovieDto>
+    suspend fun fetchUpcomingMovies(): List<MovieDto>
 
 }

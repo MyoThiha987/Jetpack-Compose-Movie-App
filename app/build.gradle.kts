@@ -76,6 +76,7 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.lifecycle.compose)
     implementation(libs.lifecycle.viewmodel)
+    implementation(libs.bundles.accompanish.pager)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

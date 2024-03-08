@@ -17,14 +17,14 @@ import javax.inject.Inject
 class MoviesCacheDataSourceImpl @Inject constructor(
     private val database: MovieDatabase
 ) : MoviesCacheDataSource {
-    override suspend fun saveMovies(data: List<MovieEntity>) {
+    override suspend fun saveMovies(data: List<MovieEntity>,movieType : Int) {
         database.withTransaction {
-            database.movieDao().deleteCacheMovies(movieType = 1)
+            database.movieDao().deleteCacheMovies(movieType = movieType)
             database.movieDao().saverMovies(data = data)
         }
     }
 
-    override fun retrieveCacheMovies(movieId: Int): Flow<List<Movie>> {
+    override fun retrieveCacheMovies(): Flow<List<Movie>> {
         return database.movieDao().retrieveCacheMovies().map { movieEntityList ->
             movieEntityList.map {
                 it.toDomain()
