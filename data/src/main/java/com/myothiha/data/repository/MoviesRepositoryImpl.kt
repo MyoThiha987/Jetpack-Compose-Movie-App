@@ -2,6 +2,7 @@ package com.myothiha.data.repository
 
 import com.myothiha.data.datasources.MoviesCacheDataSource
 import com.myothiha.data.datasources.MoviesNetworkDataSource
+import com.myothiha.data.network.dto.toEntity
 import com.myothiha.domain.model.Movie
 import com.myothiha.domain.repository.MoviesRepository
 import kotlinx.coroutines.flow.Flow
@@ -17,9 +18,10 @@ class MoviesRepositoryImpl @Inject constructor(
 ) : MoviesRepository {
     override suspend fun syncMovies() {
         val data = dataSource.fetchMovies()
+        if (data.isNotEmpty()) cacheDataSource.saveMovies(data = data.map { it.toEntity() })
     }
 
     override fun retrieveMovies(): Flow<List<Movie>> {
-        TODO("Not yet implemented")
+        return cacheDataSource.retrieveCacheMovies(movieId = 1)
     }
 }
