@@ -6,6 +6,7 @@ import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.myothiha.data.network.dto.MovieDto
 import com.myothiha.data.network.response.DataResponse
+import com.myothiha.data.network.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,11 +24,15 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.observer.ResponseObserver
+import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.accept
 import io.ktor.client.request.header
+import io.ktor.client.request.parameter
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
+import io.ktor.http.path
+import io.ktor.http.takeFrom
 import io.ktor.serialization.kotlinx.KotlinxSerializationConverter
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -53,6 +58,7 @@ object KtorNetworkModule {
             prettyPrint = true
             ignoreUnknownKeys = true
             explicitNulls = false
+
         })
 
         // Create the Interceptor
@@ -99,5 +105,14 @@ object KtorNetworkModule {
             }
         }
 
+    }
+
+    fun HttpRequestBuilder.pathUrl(path: String){
+        url {
+            takeFrom(Constants.BASE_URL)
+            path("3", path)
+            parameter("language", "en")
+            parameter("page", 1)
+        }
     }
 }

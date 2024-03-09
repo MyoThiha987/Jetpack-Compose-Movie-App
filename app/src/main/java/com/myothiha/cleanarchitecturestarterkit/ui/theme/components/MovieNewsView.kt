@@ -1,5 +1,7 @@
 package com.myothiha.cleanarchitecturestarterkit.ui.theme.components
 
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -30,8 +32,8 @@ fun MovieItemMediumView(
         Card {
             MovieImageView(
                 modifier = Modifier
-                    .width(239.dp)
-                    .height(186.dp),
+                    .width(250.dp)
+                    .height(190.dp),
                 data = "https://image.tmdb.org/t/p/original/${data.posterPath}"
             )
         }
@@ -49,10 +51,12 @@ fun MovieItemMediumView(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MovieItemSmallView(
     modifier: Modifier = Modifier,
     data: Movie,
+    onClickDetail : ()->Unit
 ) {
     Column(modifier = modifier) {
         Card {
@@ -61,6 +65,7 @@ fun MovieItemSmallView(
                     .width(180.dp)
                     .height(240.dp)
                     .clickable {
+                        onClickDetail()
                     },
                 data = "https://image.tmdb.org/t/p/original/${data.posterPath}"
             )

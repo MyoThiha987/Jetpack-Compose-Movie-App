@@ -1,5 +1,6 @@
 package com.myothiha.cleanarchitecturestarterkit.presentaion.features.movies
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -7,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.myothiha.appbase.base.BaseViewModel
 import com.myothiha.domain.model.Movie
 import com.myothiha.domain.usecases.CacheMoviesUseCase
+import com.myothiha.domain.usecases.FetchMovieDetailUseCase
 import com.myothiha.domain.usecases.SyncMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -21,7 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
     private val syncMoviesUseCase: SyncMoviesUseCase,
-    private val cacheMoviesUseCase: CacheMoviesUseCase
+    private val cacheMoviesUseCase: CacheMoviesUseCase,
+    private val movieDetailUseCase: FetchMovieDetailUseCase,
 ) : BaseViewModel() {
 
     var uiState by mutableStateOf(ScreenUiState())
@@ -29,6 +32,7 @@ class MoviesViewModel @Inject constructor(
 
     init {
         syncMovies()
+        retrieveMovieDetail()
     }
 
     fun onEvent(event: ScreenUiEvent) {
@@ -54,16 +58,37 @@ class MoviesViewModel @Inject constructor(
     private fun retrieveMovies() {
         viewModelScope.launch {
             cacheMoviesUseCase.execute(params = Unit).collectLatest {
-                val groupedMovies = it.groupBy { it.movieType }
+                val upComingData = it.filter { it.movieType == 1 }
+                val nowPlayingData = it.filter { it.movieType == 2 }
+                val topRatedData = it.filter { it.movieType == 3 }
+                val popularData = it.filter { it.movieType == 4 }
+                /*val groupedMovies = it.groupBy {
+                    it.movieType
+                }*/
                 uiState = uiState.copy(
                     isLoading = false,
-                    upcomingData = groupedMovies[1] ?: emptyList(),
-                    nowPlayingData = groupedMovies[2] ?: emptyList(),
-                    topRatedData = groupedMovies[3] ?: emptyList(),
-                    popularData = groupedMovies[4] ?: emptyList()
+                    upcomingData = upComingData,
+                    nowPlayingData = nowPlayingData,
+                    topRatedData = topRatedData,
+                    popularData = popularData
                 )
             }
         }
+    }
+
+    private fun retrieveMovieDetail() {
+        viewModelScope.launch {
+            runCatching {
+                val detail = movieDetailUseCase.execute(params = 1096197)
+                Log.d("DETAIL", detail.toString())
+            }.getOrElse {
+                uiState = uiState.copy(isLoading = false, errorMessage = exception.map(it))
+
+            }
+
+
+        }
+
     }
 }
 

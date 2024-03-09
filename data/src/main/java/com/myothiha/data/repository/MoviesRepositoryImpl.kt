@@ -2,13 +2,17 @@ package com.myothiha.data.repository
 
 import com.myothiha.data.datasources.MoviesCacheDataSource
 import com.myothiha.data.datasources.MoviesNetworkDataSource
+import com.myothiha.data.network.dto.toDomain
 import com.myothiha.data.network.dto.toEntity
 import com.myothiha.data.network.utils.Constants.NOW_PLAYING
 import com.myothiha.data.network.utils.Constants.POPULAR
 import com.myothiha.data.network.utils.Constants.TOP_RATED
 import com.myothiha.data.network.utils.Constants.UPCOMING
 import com.myothiha.domain.model.Movie
+import com.myothiha.domain.model.MovieFullDetail
 import com.myothiha.domain.repository.MoviesRepository
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -46,7 +50,20 @@ class MoviesRepositoryImpl @Inject constructor(
             movieType = POPULAR
         )
     }
+
     override fun retrieveMovies(): Flow<List<Movie>> {
         return cacheDataSource.retrieveCacheMovies()
+    }
+
+    override suspend fun retrieveMovieDetail(movieId: Int): MovieFullDetail {
+        return coroutineScope {
+            val detail = async { dataSource.fetchMovieDetail(movieId = movieId).toDomain() }.await()
+            val credit = async { dataSource.fetchCredits(movieId = movieId).toDomain() }.await()
+            MovieFullDetail(
+                movieDetail = detail,
+                credit = credit
+            )
+        }
+
     }
 }

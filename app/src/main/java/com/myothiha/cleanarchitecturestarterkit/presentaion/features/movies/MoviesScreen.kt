@@ -25,6 +25,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,6 +33,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.myothiha.cleanarchitecturestarterkit.R
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.CarouselMovieView
@@ -49,46 +51,64 @@ import com.myothiha.domain.model.Movie
 fun MoviesScreen(
     modifier: Modifier = Modifier,
     uiState: ScreenUiState,
-    uiEvent: (ScreenUiEvent) -> Unit
+    uiEvent: (ScreenUiEvent) -> Unit,
+    navController: NavController
 ) {
     val context = LocalContext.current
+
     Column(modifier = modifier.fillMaxSize()) {
         if (uiState.isLoading) LoadingView()
-        if (uiState.errorMessage != null) Toast.makeText(
-            context,
-            uiState.errorMessage,
-            Toast.LENGTH_SHORT
-        ).show()
+        if (uiState.errorMessage != null) {
+            LaunchedEffect(key1 = uiState.errorMessage) {
+                Toast.makeText(
+                    context,
+                    uiState.errorMessage,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
         HeaderSection()
-        MoviesSection(uiState = uiState)
+        MoviesSection(uiState = uiState,
+            onClickDetail = {
+            navController.navigate("detail")
+        })
 
     }
 }
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun MoviesSection(uiState: ScreenUiState, modifier: Modifier = Modifier) {
+fun MoviesSection(
+    uiState: ScreenUiState,
+    modifier: Modifier = Modifier,
+    onClickDetail: () -> Unit
+) {
+
     LazyColumn(
         state = rememberLazyListState(),
         modifier = modifier.fillMaxSize(),
     ) {
         item {
-            CarouselMovieView(data = uiState.upcomingData)
-            CategoryNameAndMovies(
-                text = "NowPlaying",
-                content = {
-                    HorizontalItemMovies(data = uiState.nowPlayingData) {
-                        MovieItemSmallView(data = it)
+            if (uiState.upcomingData.isNotEmpty()) CarouselMovieView(data = uiState.upcomingData)
+            if (uiState.nowPlayingData.isNotEmpty())
+                CategoryNameAndMovies(
+                    text = "NowPlaying",
+                    content = {
+                        HorizontalItemMovies(data = uiState.nowPlayingData) {
+                            MovieItemSmallView(
+                                onClickDetail = onClickDetail,
+                                data = it
+                            )
+                        }
                     }
-                }
-            )
-            CategoryNameAndMovies(
+                )
+            if (uiState.topRatedData.isNotEmpty()) CategoryNameAndMovies(
                 text = "TopRate",
                 content = {
                     HorizontalLargeItemMovies(uiState.topRatedData, isFling = true)
                 }
             )
-            CategoryNameAndMovies(
+            if (uiState.popularData.isNotEmpty()) CategoryNameAndMovies(
                 text = "Popular",
                 content = {
                     HorizontalItemMovies(data = uiState.nowPlayingData) {
@@ -212,13 +232,14 @@ fun HorizontalItemMovies(
     data: List<Movie>,
     state: LazyListState = rememberLazyListState(),
     content: @Composable (Movie) -> Unit,
+) {
 
-    ) {
     LazyRow(
         state = state,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(horizontal = 16.dp),
     ) {
+
         itemsIndexed(
             items = data,
             key = { index, movie -> movie.id }
@@ -250,5 +271,7 @@ fun HorizontalLargeItemMovies(
         }
     }
 }
+
+
 
 

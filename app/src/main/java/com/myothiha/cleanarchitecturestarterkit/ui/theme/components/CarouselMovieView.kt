@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
@@ -21,6 +22,7 @@ import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.google.accompanist.pager.rememberPagerState
 import com.myothiha.domain.model.Movie
+import kotlinx.coroutines.delay
 import kotlin.math.absoluteValue
 
 /**
@@ -34,7 +36,7 @@ import kotlin.math.absoluteValue
 fun CarouselMovieView(
     modifier: Modifier = Modifier,
     data: List<Movie>,
-    pagerState : PagerState= rememberPagerState(initialPage = 0)
+    pagerState: PagerState = rememberPagerState(initialPage = 0)
 ) {
     val images = data.map { it.posterPath }
     //val pagerState = com.google.accompanist.pager.rememberPagerState(initialPage = 0)

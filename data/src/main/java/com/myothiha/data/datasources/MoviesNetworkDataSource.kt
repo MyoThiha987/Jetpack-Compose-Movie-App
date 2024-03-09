@@ -1,5 +1,7 @@
 package com.myothiha.data.datasources
 
+import com.myothiha.data.network.dto.CreditResponse
+import com.myothiha.data.network.dto.MovieDetailResponse
 import com.myothiha.data.network.dto.MovieDto
 
 /**
@@ -11,5 +13,7 @@ interface MoviesNetworkDataSource {
     suspend fun fetchTopRatedMovies(): List<MovieDto>
     suspend fun fetchPopularMovies(): List<MovieDto>
     suspend fun fetchUpcomingMovies(): List<MovieDto>
+    suspend fun fetchMovieDetail(movieId : Int): MovieDetailResponse
+    suspend fun fetchCredits(movieId : Int): CreditResponse
 
 }
