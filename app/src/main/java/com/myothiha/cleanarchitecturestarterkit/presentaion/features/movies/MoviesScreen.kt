@@ -49,14 +49,35 @@ import com.myothiha.domain.model.Movie
 
 @Composable
 fun MoviesScreen(
+    viewModel: MoviesViewModel,
+    navController: NavController
+) {
+    val uiState = viewModel.uiState
+    val navigateUiState = viewModel.navigateUiState
+    val uiEvent = viewModel::onEvent
+    MoviesScreen(
+        uiState = uiState,
+        uiEvent = uiEvent,
+        navigateUiState = navigateUiState,
+        navController = navController
+    )
+
+
+}
+
+@Composable
+fun MoviesScreen(
     modifier: Modifier = Modifier,
     uiState: ScreenUiState,
+    navigateUiState: NavigateUiState,
     uiEvent: (ScreenUiEvent) -> Unit,
     navController: NavController
 ) {
     val context = LocalContext.current
+    val uiState = uiState
 
     Column(modifier = modifier.fillMaxSize()) {
+        HeaderSection()
         if (uiState.isLoading) LoadingView()
         if (uiState.errorMessage != null) {
             LaunchedEffect(key1 = uiState.errorMessage) {
@@ -67,11 +88,19 @@ fun MoviesScreen(
                 ).show()
             }
         }
-        HeaderSection()
-        MoviesSection(uiState = uiState,
-            onClickDetail = {
+        if (uiState.upcomingData.isNotEmpty() || uiState.nowPlayingData.isNotEmpty() || uiState.topRatedData.isNotEmpty() || uiState.popularData.isNotEmpty()) {
+            MoviesSection(
+                navController = navController,
+                uiState = uiState,
+                onClickDetail = {}
+            )
+
+        }
+
+        if (navigateUiState.isReadyToNavigate) {
             navController.navigate("detail")
-        })
+            uiEvent(ScreenUiEvent.Navigate)
+        }
 
     }
 }
@@ -79,6 +108,7 @@ fun MoviesScreen(
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun MoviesSection(
+    navController: NavController,
     uiState: ScreenUiState,
     modifier: Modifier = Modifier,
     onClickDetail: () -> Unit
@@ -108,14 +138,16 @@ fun MoviesSection(
                     HorizontalLargeItemMovies(uiState.topRatedData, isFling = true)
                 }
             )
-            if (uiState.popularData.isNotEmpty()) CategoryNameAndMovies(
-                text = "Popular",
-                content = {
-                    HorizontalItemMovies(data = uiState.nowPlayingData) {
-                        MovieItemMediumView(data = it)
+            if (uiState.popularData.isNotEmpty()) {
+                CategoryNameAndMovies(
+                    text = "Popular",
+                    content = {
+                        HorizontalItemMovies(data = uiState.nowPlayingData) {
+                            MovieItemMediumView(data = it)
+                        }
                     }
-                }
-            )
+                )
+            }
         }
     }
 }

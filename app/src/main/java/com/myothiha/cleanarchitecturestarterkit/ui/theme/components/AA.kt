@@ -1,9 +1,12 @@
 package com.myothiha.cleanarchitecturestarterkit.ui.theme.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -59,7 +62,7 @@ val toolbarHeight = 56.dp
 val collapseRange = headerHeight - toolbarHeight
 val avatarSize = 90.dp
 val paddingMedium = 16.dp
-val paddingSmall = 8.dp
+val paddingSmall = 2.dp
 
 @Composable
 fun Header(
@@ -194,7 +197,7 @@ fun Toolbar(
                     Text(text = title, color = Color.Black)
                 }
             },
-            backgroundColor = Color.Blue,
+            backgroundColor = Color.Green,
             elevation = 0.dp
         )
     }

@@ -32,8 +32,6 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     MainScreen(navController = navController)
-                    /*val viewModel: MoviesViewModel = hiltViewModel()
-                    MoviesScreen(uiState = viewModel.uiState, uiEvent = viewModel::onEvent)*/
                 }
             }
         }

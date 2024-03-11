@@ -173,7 +173,8 @@ fun CollapsingToolbar() {
                         }
                     }
 
-                    item(span = {
+                    item(
+                        span = {
                         GridItemSpan(maxLineSpan)
                     }) {
                         Text(
@@ -235,7 +236,7 @@ fun ItemListItem(index: Int) {
     }
 
     Card {
-        Column {
+        Column(modifier=Modifier.background(Color.Green.copy(alpha = 0.2f))) {
             val imageModifier = Modifier
                 .fillMaxWidth()
                 .height(100.dp)

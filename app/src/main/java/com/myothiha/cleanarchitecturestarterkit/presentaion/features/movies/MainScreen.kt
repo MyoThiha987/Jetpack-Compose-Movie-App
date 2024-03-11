@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.movie_detail.DetailScreen
+import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.TimetableScreen
 
 /**
  * @Author myothiha
@@ -37,17 +38,13 @@ fun MainScreen(navController : NavHostController) {
             composable("home") {
                 val moviesViewModel: MoviesViewModel = hiltViewModel()
                 MoviesScreen(
-                    uiState = moviesViewModel.uiState,
-                    uiEvent = moviesViewModel::onEvent,
+                    viewModel = moviesViewModel,
                     navController = navController
                 )
             }
             composable("detail") {
                 //val moviesViewModel: MoviesViewModel = hiltViewModel()
-                DetailScreen(
-                    navController = navController
-
-                )
+                TimetableScreen(onBookmarkIconClick = {}, onSearchClick = {})
             }
         }
     }

@@ -30,6 +30,9 @@ class MoviesViewModel @Inject constructor(
     var uiState by mutableStateOf(ScreenUiState())
         private set
 
+    var navigateUiState by mutableStateOf(NavigateUiState())
+        private set
+
     init {
         syncMovies()
         retrieveMovieDetail()
@@ -38,7 +41,14 @@ class MoviesViewModel @Inject constructor(
     fun onEvent(event: ScreenUiEvent) {
         when (event) {
             is ScreenUiEvent.Retry -> syncMovies()
+            is ScreenUiEvent.Navigate -> {
+                updateNavigateState()
+            }
         }
+    }
+
+   private fun updateNavigateState(){
+        navigateUiState = navigateUiState.copy(isReadyToNavigate = false)
     }
 
     private fun syncMovies() {
@@ -62,9 +72,6 @@ class MoviesViewModel @Inject constructor(
                 val nowPlayingData = it.filter { it.movieType == 2 }
                 val topRatedData = it.filter { it.movieType == 3 }
                 val popularData = it.filter { it.movieType == 4 }
-                /*val groupedMovies = it.groupBy {
-                    it.movieType
-                }*/
                 uiState = uiState.copy(
                     isLoading = false,
                     upcomingData = upComingData,
@@ -72,6 +79,8 @@ class MoviesViewModel @Inject constructor(
                     topRatedData = topRatedData,
                     popularData = popularData
                 )
+                navigateUiState =
+                    navigateUiState.copy(isReadyToNavigate = upComingData.isNotEmpty() && nowPlayingData.isNotEmpty() && topRatedData.isNotEmpty() && popularData.isNotEmpty())
             }
         }
     }
@@ -94,6 +103,7 @@ class MoviesViewModel @Inject constructor(
 
 sealed class ScreenUiEvent {
     data object Retry : ScreenUiEvent()
+    data object Navigate : ScreenUiEvent()
 }
 
 data class ScreenUiState(
@@ -103,4 +113,8 @@ data class ScreenUiState(
     val topRatedData: List<Movie> = emptyList(),
     val popularData: List<Movie> = emptyList(),
     var errorMessage: String? = null
+)
+
+data class NavigateUiState(
+    var isReadyToNavigate: Boolean = false
 )
