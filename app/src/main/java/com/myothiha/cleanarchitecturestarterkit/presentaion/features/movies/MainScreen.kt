@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.movie_detail.MovieDetailScreen
+import com.myothiha.cleanarchitecturestarterkit.presentaion.features.movie_detail.MovieDetailViewModel
 
 /**
  * @Author myothiha
@@ -41,9 +42,10 @@ fun MainScreen(navController: NavHostController) {
                 )
             }
             composable("detail") {
-                //val moviesViewModel: MoviesViewModel = hiltViewModel()
+                val viewModel: MovieDetailViewModel = hiltViewModel()
                 MovieDetailScreen(
                     navController = navController,
+                    viewModel = viewModel,
                     onBookmarkIconClick = {},
                     onSearchClick = {})
             }

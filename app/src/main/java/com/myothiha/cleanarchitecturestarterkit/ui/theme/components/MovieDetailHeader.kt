@@ -1,7 +1,9 @@
 package com.myothiha.cleanarchitecturestarterkit.ui.theme.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.EaseInOut
+import androidx.compose.animation.core.EaseOut
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -26,6 +28,7 @@ import com.myothiha.cleanarchitecturestarterkit.R
 
 @Composable
 fun MovieDetailHeader(
+    data: String,
     modifier: Modifier = Modifier,
     state: MovieDetailScreenScrollState = rememberMovieDetailScreenScrollState()
 ) {
@@ -33,16 +36,14 @@ fun MovieDetailHeader(
         visible = state.isSheetScrolled.not(),
         enter = fadeIn(
             animationSpec = tween(
-                500,
-                delayMillis = 50,
-                easing = FastOutLinearInEasing
+                state.sheetScrollOffset.toInt(),
+                easing = EaseIn
             )
         ),
         exit = fadeOut(
             animationSpec = tween(
                 1000,
-                delayMillis = 500,
-                easing = EaseInOut
+                easing = EaseOut
             )
         )
     ) {
@@ -51,11 +52,9 @@ fun MovieDetailHeader(
                 .height(225.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Image(
+            MovieImageView(
                 modifier = Modifier.fillMaxWidth(),
-                painter = painterResource(id = R.drawable.harry_potter),
-                contentDescription = null,
-                contentScale = ContentScale.Crop
+                data = data ,
             )
         }
     }
@@ -65,6 +64,7 @@ fun MovieDetailHeader(
 @Composable
 fun MovieDetailHeaderPreview() {
     MovieDetailHeader(
+        data ="",
         modifier = Modifier.fillMaxWidth(),
         state = rememberMovieDetailScreenScrollState()
     )

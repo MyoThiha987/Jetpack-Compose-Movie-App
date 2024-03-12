@@ -1,48 +1,28 @@
 package com.myothiha.cleanarchitecturestarterkit.presentaion.features.movie_detail
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.myothiha.cleanarchitecturestarterkit.R
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.MovieDetailBodySheet
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.MovieDetailHeader
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.MovieTopAppBar
@@ -57,6 +37,25 @@ import kotlin.math.roundToInt
 @Composable
 fun MovieDetailScreen(
     navController: NavController,
+    viewModel: MovieDetailViewModel,
+    onBookmarkIconClick: () -> Unit,
+    onSearchClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val uiState = viewModel.uiState
+
+    MovieDetailScreen(
+        navController = navController,
+        uiState = uiState,
+        onBookmarkIconClick = { },
+        onSearchClick = { })
+
+}
+
+@Composable
+fun MovieDetailScreen(
+    navController: NavController,
+    uiState: ScreenUiState,
     onBookmarkIconClick: () -> Unit,
     onSearchClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -66,8 +65,7 @@ fun MovieDetailScreen(
     Scaffold(
         modifier = modifier
             .nestedScroll(state.screenNestedScrollConnection),
-        snackbarHost = {
-        },
+        snackbarHost = {},
         topBar = {
             MovieTopAppBar(
                 navController = navController,
@@ -82,6 +80,7 @@ fun MovieDetailScreen(
             modifier = Modifier.padding(innerPadding),
         ) {
             MovieDetailHeader(
+                data = uiState.movieDetail?.movieDetail?.backdropPath.orEmpty(),
                 state = state,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -91,55 +90,53 @@ fun MovieDetailScreen(
                         )
                     },
             )
-            MovieDetailBodySheet(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 200.dp)
-                    .layout { measurable, constraints ->
-                        val placeable = measurable.measure(
-                            constraints.copy(maxHeight = constraints.maxHeight - state.sheetScrollOffset.roundToInt()),
-                        )
-                        layout(placeable.width, placeable.height) {
-                            placeable.placeRelative(
-                                0,
-                                0 + (state.sheetScrollOffset / 2).roundToInt(),
+            uiState.movieDetail?.let {
+                MovieDetailBodySheet(
+                    data = it,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = 200.dp)
+                        .layout { measurable, constraints ->
+                            val placeable = measurable.measure(
+                                constraints.copy(maxHeight = constraints.maxHeight - state.sheetScrollOffset.roundToInt()),
                             )
-                        }
-                    },
-                timetableScreenScrollState = state,
-            )
+                            layout(placeable.width, placeable.height) {
+                                placeable.placeRelative(
+                                    0,
+                                    0 + (state.sheetScrollOffset / 2).roundToInt(),
+                                )
+                            }
+                        },
+                    timetableScreenScrollState = state,
+                )
+            }
         }
     }
 }
 
 @Composable
-fun ItemListItem(index: Int) {
-
-    SideEffect {
-        println("Composing $index")
+fun HorizontalTextView(text: String, subText: String) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 2.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = text,
+            modifier = Modifier,
+            fontSize = 16.sp,
+            style = TextStyle(platformStyle = PlatformTextStyle(includeFontPadding = false)),
+        )
+        Text(
+            text = subText,
+            modifier = Modifier,
+            fontSize = 16.sp,
+            style = TextStyle(platformStyle = PlatformTextStyle(includeFontPadding = false)),
+        )
     }
 
-    Card(
-        modifier = Modifier.padding(horizontal = 16.dp)) {
-        Column(modifier = Modifier.background(Color.Green.copy(alpha = 0.2f))) {
-            val imageModifier = Modifier
-                .fillMaxWidth()
-                .height(100.dp)
-                .clip(RoundedCornerShape(topEnd = 0.dp, bottomStart = 12.dp, bottomEnd = 12.dp))
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                contentDescription = "Title $index",
-                contentScale = ContentScale.Fit,
-                modifier = imageModifier
-            )
-            Text(
-                "Title $index",
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(16.dp),
-            )
-        }
-    }
 }
 /*@Composable
 fun DetailScreen(
@@ -223,6 +220,7 @@ fun DialogContent(
 fun TimetableScreenPreview() {
     MovieDetailScreen(
         navController = rememberNavController(),
+        uiState = ScreenUiState(),
         onBookmarkIconClick = {},
         onSearchClick = {}
     )

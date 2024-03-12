@@ -1,7 +1,5 @@
 package com.myothiha.cleanarchitecturestarterkit.ui.theme.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.height
@@ -30,15 +28,14 @@ fun MovieItemMediumView(
 
 ) {
     Column(modifier = modifier) {
-        Card {
+        Card(modifier = Modifier.bouncingClickable {
+            onClickDetail()
+        }) {
             MovieImageView(
                 modifier = Modifier
                     .width(250.dp)
-                    .height(190.dp)
-                    .clickable {
-                        onClickDetail()
-                    },
-                data = "https://image.tmdb.org/t/p/original/${data.posterPath}"
+                    .height(190.dp),
+                data = data.posterPath
             )
         }
         Text(
@@ -55,7 +52,6 @@ fun MovieItemMediumView(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MovieItemSmallView(
     modifier: Modifier = Modifier,
@@ -63,15 +59,14 @@ fun MovieItemSmallView(
     onClickDetail: () -> Unit
 ) {
     Column(modifier = modifier) {
-        Card {
+        Card(modifier = Modifier.bouncingClickable {
+            onClickDetail()
+        }) {
             MovieImageView(
                 modifier = Modifier
                     .width(180.dp)
-                    .height(240.dp)
-                    .clickable {
-                        onClickDetail()
-                    },
-                data = "https://image.tmdb.org/t/p/original/${data.posterPath}"
+                    .height(240.dp),
+                data = data.posterPath
             )
         }
         Text(
@@ -96,15 +91,17 @@ fun LazyItemScope.MovieItemLargeView(
 
 ) {
     Column(modifier = modifier) {
-        Card(shape = RoundedCornerShape(12.dp)) {
+        Card(
+            modifier = Modifier.bouncingClickable {
+                onClickDetail()
+            },
+            shape = RoundedCornerShape(12.dp)
+        ) {
             MovieImageView(
                 modifier = Modifier
                     .fillParentMaxWidth()
-                    .aspectRatio(16f / 9f)
-                    .clickable {
-                        onClickDetail()
-                    },
-                data = "https://image.tmdb.org/t/p/original/${data.posterPath}"
+                    .aspectRatio(16f / 9f),
+                data = data.posterPath
             )
         }
     }
@@ -113,7 +110,7 @@ fun LazyItemScope.MovieItemLargeView(
 @Composable
 fun <T> MovieImageView(modifier: Modifier = Modifier, data: T) {
     AsyncImage(
-        model = data,
+        model = "https://image.tmdb.org/t/p/original/${data}",
         contentDescription = null,
         modifier = modifier,
         contentScale = ContentScale.Crop,

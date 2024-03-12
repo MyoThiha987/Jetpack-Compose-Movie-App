@@ -88,7 +88,7 @@ fun MoviesScreen(
                 ).show()
             }
         }
-        if (uiState.upcomingData.isNotEmpty() || uiState.nowPlayingData.isNotEmpty() || uiState.topRatedData.isNotEmpty() || uiState.popularData.isNotEmpty()) {
+        if (uiState.upcomingData.isNotEmpty() && uiState.nowPlayingData.isNotEmpty() && uiState.topRatedData.isNotEmpty() && uiState.popularData.isNotEmpty()) {
             MoviesSection(
                 navController = navController,
                 uiState = uiState,
@@ -121,36 +121,45 @@ fun MoviesSection(
         modifier = modifier.fillMaxSize(),
     ) {
         item {
-            if (uiState.upcomingData.isNotEmpty()) CarouselMovieView(data = uiState.upcomingData)
+            if (uiState.upcomingData.isNotEmpty())
+                CarouselMovieView(data = uiState.upcomingData)
             if (uiState.nowPlayingData.isNotEmpty())
-                CategoryNameAndMovies(
+                CategoryAndContent(
                     text = "NowPlaying",
                     content = {
-                        HorizontalItemMovies(data = uiState.nowPlayingData) {
-                            MovieItemSmallView(
-                                onClickDetail = onClickDetail,
-                                data = it
-                            )
-                        }
+                        HorizontalItemView(
+                            arrangement = Arrangement.spacedBy(12.dp),
+                            data = uiState.nowPlayingData,
+                            content = {
+                                MovieItemSmallView(
+                                    onClickDetail = onClickDetail,
+                                    data = it
+                                )
+                            }
+                        )
                     }
                 )
-            if (uiState.topRatedData.isNotEmpty()) CategoryNameAndMovies(
+            if (uiState.topRatedData.isNotEmpty()) CategoryAndContent(
                 text = "TopRate",
                 content = {
-                    HorizontalLargeItemMovies(
+                    HorizontalLargeItemView(
                         uiState.topRatedData,
                         isFling = true,
-                        onClickDetail = onClickDetail,
+                        onClickDetail = onClickDetail
                     )
                 }
             )
             if (uiState.popularData.isNotEmpty()) {
-                CategoryNameAndMovies(
+                CategoryAndContent(
                     text = "Popular",
                     content = {
-                        HorizontalItemMovies(data = uiState.nowPlayingData) {
-                            MovieItemMediumView(onClickDetail = onClickDetail, data = it)
-                        }
+                        HorizontalItemView(
+                            arrangement = Arrangement.spacedBy(12.dp),
+                            data = uiState.nowPlayingData,
+                            content = {
+                                MovieItemMediumView(onClickDetail = onClickDetail, data = it)
+                            }
+                        )
                     }
                 )
             }
@@ -159,7 +168,7 @@ fun MoviesSection(
 }
 
 @Composable
-fun CategoryNameAndMovies(
+fun CategoryAndContent(
     text: String,
     content: @Composable () -> Unit
 ) {
@@ -182,6 +191,36 @@ fun CategoryNameAndMovies(
             )
             Text(
                 text = "See more",
+                modifier = Modifier
+                    .paddingFromBaseline(top = 16.dp)
+                    .padding(horizontal = 16.dp)
+            )
+        }
+
+        content()
+    }
+}
+
+@Composable
+fun TitleAndContent(
+    title: String,
+    modifier: Modifier = Modifier,
+    horizontalAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
+    verticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(12.dp),
+    content: @Composable () -> Unit
+) {
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = verticalArrangement
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleLarge.copy(
+                    color = Color.Black
+                ),
                 modifier = Modifier
                     .paddingFromBaseline(top = 16.dp)
                     .padding(horizontal = 16.dp)
@@ -266,21 +305,27 @@ fun IconsRowView() {
 }
 
 @Composable
-fun HorizontalItemMovies(
-    data: List<Movie>,
+fun <T> HorizontalItemView(
+    data: List<T>,
+    arrangement: Arrangement.HorizontalOrVertical,
+    alignment: Alignment.Vertical = Alignment.Top,
+    contentPadding :PaddingValues = PaddingValues(0.dp),
+    modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
-    content: @Composable (Movie) -> Unit,
+    content: @Composable (T) -> Unit,
 ) {
 
     LazyRow(
+        modifier = modifier,
         state = state,
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = arrangement,
+        verticalAlignment = alignment,
         contentPadding = PaddingValues(horizontal = 16.dp),
     ) {
 
         itemsIndexed(
             items = data,
-            key = { index, movie -> movie.id }
+            key = { index, movie -> "${index}${movie}" }
         ) { index, it ->
             content(it)
         }
@@ -289,13 +334,12 @@ fun HorizontalItemMovies(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HorizontalLargeItemMovies(
+fun HorizontalLargeItemView(
     data: List<Movie>,
     isFling: Boolean,
     state: LazyListState = rememberLazyListState(),
-    onClickDetail: () -> Unit,
-
-    ) {
+    onClickDetail: () -> Unit
+) {
     LazyRow(
         state = state,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -306,7 +350,10 @@ fun HorizontalLargeItemMovies(
             items = data,
             key = { index, movie -> movie.id }
         ) { index, it ->
-            MovieItemLargeView(onClickDetail = onClickDetail, data = it)
+            MovieItemLargeView(
+                onClickDetail = onClickDetail,
+                data = it
+            )
         }
     }
 }

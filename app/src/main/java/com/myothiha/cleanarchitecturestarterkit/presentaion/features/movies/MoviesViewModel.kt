@@ -23,8 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
     private val syncMoviesUseCase: SyncMoviesUseCase,
-    private val cacheMoviesUseCase: CacheMoviesUseCase,
-    private val movieDetailUseCase: FetchMovieDetailUseCase,
+    private val cacheMoviesUseCase: CacheMoviesUseCase
 ) : BaseViewModel() {
 
     var uiState by mutableStateOf(ScreenUiState())
@@ -35,7 +34,6 @@ class MoviesViewModel @Inject constructor(
 
     init {
         syncMovies()
-        retrieveMovieDetail()
     }
 
     fun onEvent(event: ScreenUiEvent) {
@@ -83,21 +81,6 @@ class MoviesViewModel @Inject constructor(
                     navigateUiState.copy(isReadyToNavigate = upComingData.isNotEmpty() && nowPlayingData.isNotEmpty() && topRatedData.isNotEmpty() && popularData.isNotEmpty())
             }
         }
-    }
-
-    private fun retrieveMovieDetail() {
-        viewModelScope.launch {
-            runCatching {
-                val detail = movieDetailUseCase.execute(params = 1096197)
-                Log.d("DETAIL", detail.toString())
-            }.getOrElse {
-                uiState = uiState.copy(isLoading = false, errorMessage = exception.map(it))
-
-            }
-
-
-        }
-
     }
 }
 

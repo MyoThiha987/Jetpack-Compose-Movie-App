@@ -22,8 +22,8 @@ data class MovieDetail(
 )
 
 data class MovieFullDetail(
-    val movieDetail: MovieDetail,
-    val credit: Credit
+    val movieDetail: MovieDetail?,
+    val credit: Credit?
 )
 
 data class Genre(
