@@ -19,14 +19,14 @@ import kotlin.math.abs
  **/
 
 @Composable
-fun rememberTimetableScreenScrollState(): TimetableScreenScrollState {
-    return rememberSaveable(saver = TimetableScreenScrollState.Saver) {
-        TimetableScreenScrollState()
+fun rememberMovieDetailScreenScrollState(): MovieDetailScreenScrollState {
+    return rememberSaveable(saver = MovieDetailScreenScrollState.Saver) {
+        MovieDetailScreenScrollState()
     }
 }
 
 @Stable
-class TimetableScreenScrollState(
+class MovieDetailScreenScrollState(
     initialSheetOffsetLimit: Float = 0f,
     initialSheetScrollOffset: Float = 0f,
 ) {
@@ -107,10 +107,10 @@ class TimetableScreenScrollState(
     }
 
     companion object {
-        val Saver: Saver<TimetableScreenScrollState, *> = listSaver(
+        val Saver: Saver<MovieDetailScreenScrollState, *> = listSaver(
             save = { listOf(it.sheetScrollOffsetLimit, it.sheetScrollOffset) },
             restore = {
-                TimetableScreenScrollState(
+                MovieDetailScreenScrollState(
                     initialSheetOffsetLimit = it[0],
                     initialSheetScrollOffset = it[1],
                 )

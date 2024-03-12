@@ -1,6 +1,5 @@
 package com.myothiha.cleanarchitecturestarterkit.ui.theme.components
 
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -27,13 +26,18 @@ import com.myothiha.domain.model.Movie
 fun MovieItemMediumView(
     modifier: Modifier = Modifier,
     data: Movie,
+    onClickDetail: () -> Unit
+
 ) {
     Column(modifier = modifier) {
         Card {
             MovieImageView(
                 modifier = Modifier
                     .width(250.dp)
-                    .height(190.dp),
+                    .height(190.dp)
+                    .clickable {
+                        onClickDetail()
+                    },
                 data = "https://image.tmdb.org/t/p/original/${data.posterPath}"
             )
         }
@@ -56,7 +60,7 @@ fun MovieItemMediumView(
 fun MovieItemSmallView(
     modifier: Modifier = Modifier,
     data: Movie,
-    onClickDetail : ()->Unit
+    onClickDetail: () -> Unit
 ) {
     Column(modifier = modifier) {
         Card {
@@ -88,13 +92,18 @@ fun MovieItemSmallView(
 fun LazyItemScope.MovieItemLargeView(
     modifier: Modifier = Modifier,
     data: Movie,
+    onClickDetail: () -> Unit
+
 ) {
     Column(modifier = modifier) {
         Card(shape = RoundedCornerShape(12.dp)) {
             MovieImageView(
                 modifier = Modifier
                     .fillParentMaxWidth()
-                    .aspectRatio(16f / 9f),
+                    .aspectRatio(16f / 9f)
+                    .clickable {
+                        onClickDetail()
+                    },
                 data = "https://image.tmdb.org/t/p/original/${data.posterPath}"
             )
         }

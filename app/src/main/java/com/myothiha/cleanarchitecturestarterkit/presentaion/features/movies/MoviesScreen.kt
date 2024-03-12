@@ -92,15 +92,17 @@ fun MoviesScreen(
             MoviesSection(
                 navController = navController,
                 uiState = uiState,
-                onClickDetail = {}
+                onClickDetail = {
+                    navController.navigate("detail")
+                }
             )
 
         }
 
-        if (navigateUiState.isReadyToNavigate) {
+        /*if (navigateUiState.isReadyToNavigate) {
             navController.navigate("detail")
             uiEvent(ScreenUiEvent.Navigate)
-        }
+        }*/
 
     }
 }
@@ -135,7 +137,11 @@ fun MoviesSection(
             if (uiState.topRatedData.isNotEmpty()) CategoryNameAndMovies(
                 text = "TopRate",
                 content = {
-                    HorizontalLargeItemMovies(uiState.topRatedData, isFling = true)
+                    HorizontalLargeItemMovies(
+                        uiState.topRatedData,
+                        isFling = true,
+                        onClickDetail = onClickDetail,
+                    )
                 }
             )
             if (uiState.popularData.isNotEmpty()) {
@@ -143,7 +149,7 @@ fun MoviesSection(
                     text = "Popular",
                     content = {
                         HorizontalItemMovies(data = uiState.nowPlayingData) {
-                            MovieItemMediumView(data = it)
+                            MovieItemMediumView(onClickDetail = onClickDetail, data = it)
                         }
                     }
                 )
@@ -287,6 +293,7 @@ fun HorizontalLargeItemMovies(
     data: List<Movie>,
     isFling: Boolean,
     state: LazyListState = rememberLazyListState(),
+    onClickDetail: () -> Unit,
 
     ) {
     LazyRow(
@@ -299,7 +306,7 @@ fun HorizontalLargeItemMovies(
             items = data,
             key = { index, movie -> movie.id }
         ) { index, it ->
-            MovieItemLargeView(data = it)
+            MovieItemLargeView(onClickDetail = onClickDetail, data = it)
         }
     }
 }

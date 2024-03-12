@@ -10,9 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import com.myothiha.cleanarchitecturestarterkit.presentaion.features.movie_detail.DetailScreen
-import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.TimetableScreen
+import com.myothiha.cleanarchitecturestarterkit.presentaion.features.movie_detail.MovieDetailScreen
 
 /**
  * @Author myothiha
@@ -20,7 +18,7 @@ import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.TimetableScr
  **/
 
 @Composable
-fun MainScreen(navController : NavHostController) {
+fun MainScreen(navController: NavHostController) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val movieDestinations = listOf("Home", "Detail")
     /*val currentScreen = movieDestinations.find {
@@ -44,7 +42,10 @@ fun MainScreen(navController : NavHostController) {
             }
             composable("detail") {
                 //val moviesViewModel: MoviesViewModel = hiltViewModel()
-                TimetableScreen(onBookmarkIconClick = {}, onSearchClick = {})
+                MovieDetailScreen(
+                    navController = navController,
+                    onBookmarkIconClick = {},
+                    onSearchClick = {})
             }
         }
     }

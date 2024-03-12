@@ -11,13 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.movies.MainScreen
-import com.myothiha.cleanarchitecturestarterkit.presentaion.features.movies.MoviesScreen
-import com.myothiha.cleanarchitecturestarterkit.presentaion.features.movies.MoviesViewModel
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.CleanArchitectureStarterKitTheme
-import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.CollapsingToolbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
