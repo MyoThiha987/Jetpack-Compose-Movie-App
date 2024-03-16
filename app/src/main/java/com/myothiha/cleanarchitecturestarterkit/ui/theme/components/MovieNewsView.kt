@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -65,7 +66,7 @@ fun MovieItemSmallView(
     modifier: Modifier = Modifier,
     data: Movie,
     onClickDetail: (Int) -> Unit,
-    onClickSave: (Int, Boolean,Int) -> Unit
+    onClickSave: (Int, Boolean, Int) -> Unit
 ) {
     Box(modifier = modifier) {
         Column {
@@ -98,7 +99,57 @@ fun MovieItemSmallView(
                 .size(32.dp)
                 .align(alignment = Alignment.TopEnd)
                 .clickable {
-                    onClickSave(data.id, data.isLiked,data.movieType)
+                    onClickSave(data.id, data.isLiked, data.movieType)
+                },
+            painter = painterResource(id = R.drawable.ic_favourite),
+            contentDescription = null,
+            tint = tintColor
+        )
+    }
+
+}
+
+@Composable
+fun MovieGridItemView(
+    modifier: Modifier = Modifier,
+    data: Movie,
+    onClickDetail: (Int) -> Unit,
+    onClickSave: (Int, Boolean, Int) -> Unit
+) {
+    Box(modifier = modifier
+        .fillMaxWidth()
+        //.padding(16.dp)
+    ) {
+        Column {
+            Card(modifier = Modifier.bouncingClickable {
+                onClickDetail(data.id)
+            }) {
+                MovieImageView(
+                    modifier = Modifier
+                        .height(190.dp),
+                    data = data.posterPath
+                )
+            }
+            Text(
+                modifier = Modifier
+                    .padding(top = 6.dp)
+                    .width(180.dp),
+                text = data.originalTitle,
+                color = Color.Black,
+                fontSize = 18.sp,
+                maxLines = 1,
+                fontWeight = FontWeight(200)
+            )
+
+        }
+        val tintColor = if (data.isLiked) Color.Red else Color.White
+        Icon(
+            modifier = Modifier
+                .padding(8.dp)
+                .size(32.dp)
+                .align(alignment = Alignment.TopEnd)
+                .clickable {
+                    onClickSave(data.id, data.isLiked, data.movieType)
                 },
             painter = painterResource(id = R.drawable.ic_favourite),
             contentDescription = null,
@@ -148,5 +199,5 @@ fun ItemSmallPreview() {
     MovieItemSmallView(
         data = Movie(1, "AA", "", 0.0, "", "", 0.0, 0, 0, true),
         onClickDetail = {},
-        onClickSave = { a, b,c -> })
+        onClickSave = { a, b, c -> })
 }

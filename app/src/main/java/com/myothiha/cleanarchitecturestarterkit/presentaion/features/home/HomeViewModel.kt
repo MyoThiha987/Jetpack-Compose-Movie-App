@@ -54,7 +54,7 @@ class HomeViewModel @Inject constructor(
 
     private fun saveMovieById(movieId: Int, isLiked: Boolean, movieType: Int) {
         viewModelScope.launch {
-            updateMovieUseCase.execute(params = Triple(movieId, isLiked,movieType))
+            updateMovieUseCase.execute(params = Triple(movieId, isLiked, movieType))
         }
     }
 
@@ -67,11 +67,10 @@ class HomeViewModel @Inject constructor(
             uiState = uiState.copy(isLoading = true)
             runCatching {
                 syncMoviesUseCase.execute(params = Unit)
+            }.getOrElse {
+                uiState = uiState.copy(isLoading = false, errorMessage = exception.map(it))
+                retrieveMovies()
             }
-                .getOrElse {
-                    uiState = uiState.copy(isLoading = false, errorMessage = exception.map(it))
-                    retrieveMovies()
-                }
         }
     }
 
@@ -99,7 +98,8 @@ class HomeViewModel @Inject constructor(
 sealed class ScreenUiEvent {
     data object Retry : ScreenUiEvent()
     data object Navigate : ScreenUiEvent()
-    data class onSaveMovie(val movieId: Int, val isLiked: Boolean, val movieType: Int) : ScreenUiEvent()
+    data class onSaveMovie(val movieId: Int, val isLiked: Boolean, val movieType: Int) :
+        ScreenUiEvent()
 }
 
 data class ScreenUiState(

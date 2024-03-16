@@ -12,6 +12,6 @@ interface MoviesRepository {
     suspend fun syncMovies()
     fun retrieveMovies(): Flow<List<Movie>>
     suspend fun retrieveMovieDetail(movieId: Int): MovieFullDetail
-
-    suspend fun updateSavedMovie(movieId: Int, isLiked: Boolean,movieType : Int)
+    suspend fun updateSavedMovie(movieId: Int, isLiked: Boolean, movieType: Int)
+    suspend fun retrieveSavedMovies(): Flow<List<Movie>>
 }

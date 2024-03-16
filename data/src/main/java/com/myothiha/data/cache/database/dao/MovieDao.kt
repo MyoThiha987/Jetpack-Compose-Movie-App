@@ -26,4 +26,7 @@ interface MovieDao {
     @Query("DELETE from movies WHERE movieType=:movieType")
     suspend fun deleteCacheMovies(movieType: Int)
 
+    @Query("SELECT * from movies WHERE isLiked=:isLiked")
+    fun retrieveBookmarkCacheMovies(isLiked: Boolean = true): Flow<List<MovieEntity>>
+
 }

@@ -16,6 +16,7 @@ import com.myothiha.cleanarchitecturestarterkit.presentaion.features.home.HomeVi
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.movie_detail.MovieDetailScreen
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.movie_detail.MovieDetailViewModel
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.save_movie.SaveMovieScreen
+import com.myothiha.cleanarchitecturestarterkit.presentaion.features.save_movie.SaveMovieViewModel
 import com.myothiha.domain.utils.extension.orZero
 
 /**
@@ -30,7 +31,7 @@ fun AppNavigation(
 ) {
     NavHost(navController = navHostController, startDestination = AppGraph.HOME) {
         homeNavGraph(navHostController = navHostController, paddingValues)
-        saveNavGraph(navHostController = navHostController)
+        saveNavGraph(navHostController = navHostController,paddingValues = paddingValues)
         accountNavGraph(navHostController = navHostController)
         composable(
             route = AppDestination.MovieDetailScreen.route,
@@ -48,7 +49,6 @@ fun AppNavigation(
             )
         }
 
-
     }
 
 }
@@ -60,17 +60,27 @@ fun NavGraphBuilder.homeNavGraph(
     navigation(startDestination = AppDestination.HomeScreen.route, route = AppGraph.HOME) {
         composable(route = AppDestination.HomeScreen.route) {
             val viewmodel: HomeViewModel = hiltViewModel()
-            HomeScreen(viewModel = viewmodel, navController = navHostController, paddingValues)
+            HomeScreen(
+                viewModel = viewmodel,
+                navController = navHostController,
+                paddingValues = paddingValues
+            )
         }
     }
 }
 
 fun NavGraphBuilder.saveNavGraph(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    paddingValues: PaddingValues
 ) {
     navigation(startDestination = AppDestination.SaveMovieScreen.route, route = AppGraph.SAVE) {
         composable(route = AppDestination.SaveMovieScreen.route) {
-            SaveMovieScreen(navController = navHostController)
+            val viewmodel: SaveMovieViewModel = hiltViewModel()
+            SaveMovieScreen(
+                navController = navHostController,
+                viewModel = viewmodel,
+                paddingValues = paddingValues
+            )
         }
     }
 }

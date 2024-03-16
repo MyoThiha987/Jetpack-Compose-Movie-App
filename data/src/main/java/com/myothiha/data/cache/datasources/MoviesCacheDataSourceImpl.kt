@@ -33,6 +33,15 @@ class MoviesCacheDataSourceImpl @Inject constructor(
     }
 
     override suspend fun updateSaveMovie(movieId: Int, isLiked: Boolean, movieType: Int) {
-        database.movieDao().updateSaveMovie(movieId = movieId, isLiked = isLiked, movieType = movieType)
+        database.movieDao()
+            .updateSaveMovie(movieId = movieId, isLiked = isLiked, movieType = movieType)
+    }
+
+    override suspend fun retrieveBookmarkCacheMovies(): Flow<List<Movie>> {
+        return database.movieDao().retrieveBookmarkCacheMovies().map { movieEntityList ->
+            movieEntityList.map {
+                it.toDomain()
+            }
+        }
     }
 }

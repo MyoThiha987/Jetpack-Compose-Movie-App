@@ -12,5 +12,7 @@ interface MoviesCacheDataSource {
     suspend fun saveMovies(data: List<MovieEntity>, movieType: Int)
     fun retrieveCacheMovies(): Flow<List<Movie>>
     suspend fun updateSaveMovie(movieId: Int, isLiked: Boolean, movieType: Int)
+    suspend fun retrieveBookmarkCacheMovies(): Flow<List<Movie>>
+
 
 }
