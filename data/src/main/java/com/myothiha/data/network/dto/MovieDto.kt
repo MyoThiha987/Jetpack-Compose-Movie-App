@@ -2,6 +2,7 @@ package com.myothiha.data.network.dto
 
 import com.myothiha.data.cache.entity.MovieEntity
 import com.myothiha.domain.model.Movie
+import com.myothiha.domain.utils.extension.orFalse
 import com.myothiha.domain.utils.extension.orZero
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -28,7 +29,8 @@ data class MovieDto(
     @SerialName("vote_average")
     val voteAverage: Double?,
     @SerialName("vote_count")
-    val voteCount: Int?
+    val voteCount: Int?,
+    val isLiked : Boolean?
 )
 
 fun MovieDto.toEntity(movieType: Int): MovieEntity {
@@ -43,7 +45,7 @@ fun MovieDto.toEntity(movieType: Int): MovieEntity {
             voteAverage = voteAverage.orZero(),
             voteCount = voteCount.orZero(),
             movieType = movieType,
-            isLiked = false
+            isLiked = isLiked.orFalse()
         )
     }
 }
@@ -60,7 +62,7 @@ fun MovieEntity.toDomain(): Movie {
             voteAverage = voteAverage,
             voteCount = voteCount,
             movieType = movieType,
-            isLiked = false
+            isLiked = isLiked.orFalse()
         )
     }
 }

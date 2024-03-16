@@ -1,8 +1,6 @@
 package com.myothiha.domain.repository
 
-import com.myothiha.domain.model.Credit
 import com.myothiha.domain.model.Movie
-import com.myothiha.domain.model.MovieDetail
 import com.myothiha.domain.model.MovieFullDetail
 import kotlinx.coroutines.flow.Flow
 
@@ -14,4 +12,6 @@ interface MoviesRepository {
     suspend fun syncMovies()
     fun retrieveMovies(): Flow<List<Movie>>
     suspend fun retrieveMovieDetail(movieId: Int): MovieFullDetail
+
+    suspend fun updateSavedMovie(movieId: Int, isLiked: Boolean,movieType : Int)
 }

@@ -17,7 +17,7 @@ import javax.inject.Inject
 class MoviesCacheDataSourceImpl @Inject constructor(
     private val database: MovieDatabase
 ) : MoviesCacheDataSource {
-    override suspend fun saveMovies(data: List<MovieEntity>,movieType : Int) {
+    override suspend fun saveMovies(data: List<MovieEntity>, movieType: Int) {
         database.withTransaction {
             database.movieDao().deleteCacheMovies(movieType = movieType)
             database.movieDao().saverMovies(data = data)
@@ -30,5 +30,9 @@ class MoviesCacheDataSourceImpl @Inject constructor(
                 it.toDomain()
             }
         }
+    }
+
+    override suspend fun updateSaveMovie(movieId: Int, isLiked: Boolean, movieType: Int) {
+        database.movieDao().updateSaveMovie(movieId = movieId, isLiked = isLiked, movieType = movieType)
     }
 }

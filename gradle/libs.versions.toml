@@ -25,6 +25,7 @@ navigation_compose = "2.7.7"
 appcompat = "1.6.1"
 material = "1.11.0"
 accompanish-pager-indicator = "0.28.0"
+blur ="0.6.2"
 
 
 [libraries]
@@ -74,6 +75,7 @@ appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "a
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 accompanish-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanish-pager-indicator" }
 accompanish-pager-indicator = { group = "com.google.accompanist", name = "accompanist-pager-indicators", version.ref = "accompanish-pager-indicator" }
+blur = {module ="dev.chrisbanes.haze:haze-materials",version.ref ="blur"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

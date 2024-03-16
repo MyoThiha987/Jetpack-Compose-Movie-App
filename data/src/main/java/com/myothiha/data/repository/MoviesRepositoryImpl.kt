@@ -66,4 +66,8 @@ class MoviesRepositoryImpl @Inject constructor(
         }
 
     }
+
+    override suspend fun updateSavedMovie(movieId: Int, isLiked: Boolean, movieType: Int) {
+        cacheDataSource.updateSaveMovie(movieId = movieId, isLiked = isLiked, movieType = movieType)
+    }
 }

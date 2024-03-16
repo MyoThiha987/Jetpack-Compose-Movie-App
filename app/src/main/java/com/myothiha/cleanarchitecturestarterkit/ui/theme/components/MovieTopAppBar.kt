@@ -48,8 +48,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.myothiha.cleanarchitecturestarterkit.R
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.movie_detail.HorizontalTextView
-import com.myothiha.cleanarchitecturestarterkit.presentaion.features.movies.HorizontalItemView
-import com.myothiha.cleanarchitecturestarterkit.presentaion.features.movies.TitleAndContent
+import com.myothiha.cleanarchitecturestarterkit.presentaion.features.home.HorizontalItemView
+import com.myothiha.cleanarchitecturestarterkit.presentaion.features.home.TitleAndContent
 import com.myothiha.domain.model.Cast
 import com.myothiha.domain.model.Genre
 import com.myothiha.domain.model.MovieFullDetail
@@ -66,7 +66,6 @@ import com.myothiha.domain.utils.extension.orZero
 fun MovieTopAppBar(
     navController: NavController = rememberNavController(),
     onSearchClick: () -> Unit,
-    onTopAreaBookmarkIconClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
@@ -83,7 +82,7 @@ fun MovieTopAppBar(
         },
         actions = {
             IconButton(
-                onClick = { onTopAreaBookmarkIconClick() },
+                onClick = { },
             ) {
                 Icon(
                     painterResource(id = R.drawable.ic_favourite),
@@ -420,8 +419,6 @@ fun CompanyItemView(modifier: Modifier = Modifier, data: ProductionCompany) {
 fun MovieTopAppBarPreview() {
     MovieTopAppBar(
         onSearchClick = {},
-        onTopAreaBookmarkIconClick = {}
-
     )
 }
 

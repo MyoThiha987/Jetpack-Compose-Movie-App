@@ -1,6 +1,5 @@
-package com.myothiha.cleanarchitecturestarterkit.presentaion.features.movies
+package com.myothiha.cleanarchitecturestarterkit.presentaion.features.home
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.myothiha.appbase.base.BaseViewModel
 import com.myothiha.domain.model.Movie
 import com.myothiha.domain.usecases.CacheMoviesUseCase
-import com.myothiha.domain.usecases.FetchMovieDetailUseCase
 import com.myothiha.domain.usecases.SyncMoviesUseCase
+import com.myothiha.domain.usecases.UpdateMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -21,8 +20,9 @@ import javax.inject.Inject
  **/
 
 @HiltViewModel
-class MoviesViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     private val syncMoviesUseCase: SyncMoviesUseCase,
+    private val updateMovieUseCase: UpdateMovieUseCase,
     private val cacheMoviesUseCase: CacheMoviesUseCase
 ) : BaseViewModel() {
 
@@ -33,6 +33,7 @@ class MoviesViewModel @Inject constructor(
         private set
 
     init {
+        retrieveMovies()
         syncMovies()
     }
 
@@ -42,10 +43,22 @@ class MoviesViewModel @Inject constructor(
             is ScreenUiEvent.Navigate -> {
                 updateNavigateState()
             }
+
+            is ScreenUiEvent.onSaveMovie -> saveMovieById(
+                movieId = event.movieId,
+                isLiked = event.isLiked,
+                movieType = event.movieType
+            )
         }
     }
 
-   private fun updateNavigateState(){
+    private fun saveMovieById(movieId: Int, isLiked: Boolean, movieType: Int) {
+        viewModelScope.launch {
+            updateMovieUseCase.execute(params = Triple(movieId, isLiked,movieType))
+        }
+    }
+
+    private fun updateNavigateState() {
         navigateUiState = navigateUiState.copy(isReadyToNavigate = false)
     }
 
@@ -54,7 +67,6 @@ class MoviesViewModel @Inject constructor(
             uiState = uiState.copy(isLoading = true)
             runCatching {
                 syncMoviesUseCase.execute(params = Unit)
-                retrieveMovies()
             }
                 .getOrElse {
                     uiState = uiState.copy(isLoading = false, errorMessage = exception.map(it))
@@ -87,6 +99,7 @@ class MoviesViewModel @Inject constructor(
 sealed class ScreenUiEvent {
     data object Retry : ScreenUiEvent()
     data object Navigate : ScreenUiEvent()
+    data class onSaveMovie(val movieId: Int, val isLiked: Boolean, val movieType: Int) : ScreenUiEvent()
 }
 
 data class ScreenUiState(

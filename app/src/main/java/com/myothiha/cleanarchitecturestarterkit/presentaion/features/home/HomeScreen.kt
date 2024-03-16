@@ -1,4 +1,4 @@
-package com.myothiha.cleanarchitecturestarterkit.presentaion.features.movies
+package com.myothiha.cleanarchitecturestarterkit.presentaion.features.home
 
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.myothiha.cleanarchitecturestarterkit.R
+import com.myothiha.cleanarchitecturestarterkit.navigation.AppDestination
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.CarouselMovieView
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.MovieItemLargeView
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.MovieItemMediumView
@@ -48,35 +49,42 @@ import com.myothiha.domain.model.Movie
  **/
 
 @Composable
-fun MoviesScreen(
-    viewModel: MoviesViewModel,
-    navController: NavController
+fun HomeScreen(
+    viewModel: HomeViewModel,
+    navController: NavController,
+    paddingValues: PaddingValues
 ) {
     val uiState = viewModel.uiState
     val navigateUiState = viewModel.navigateUiState
     val uiEvent = viewModel::onEvent
-    MoviesScreen(
+    HomeScreen(
         uiState = uiState,
         uiEvent = uiEvent,
         navigateUiState = navigateUiState,
-        navController = navController
+        navController = navController,
+        paddingValues = paddingValues
     )
 
 
 }
 
 @Composable
-fun MoviesScreen(
+fun HomeScreen(
     modifier: Modifier = Modifier,
     uiState: ScreenUiState,
     navigateUiState: NavigateUiState,
     uiEvent: (ScreenUiEvent) -> Unit,
-    navController: NavController
+    navController: NavController,
+    paddingValues: PaddingValues
 ) {
     val context = LocalContext.current
     val uiState = uiState
 
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(
+        modifier = modifier
+            .padding(paddingValues)
+            .fillMaxSize()
+    ) {
         HeaderSection()
         if (uiState.isLoading) LoadingView()
         if (uiState.errorMessage != null) {
@@ -93,7 +101,16 @@ fun MoviesScreen(
                 navController = navController,
                 uiState = uiState,
                 onClickDetail = {
-                    navController.navigate("detail")
+                    navController.navigate(AppDestination.MovieDetailScreen.args(movieId = it))
+                },
+                onClickSave = { movieId, isLiked, movieType ->
+                    uiEvent(
+                        ScreenUiEvent.onSaveMovie(
+                            movieId = movieId,
+                            isLiked = !isLiked,
+                            movieType = movieType
+                        )
+                    )
                 }
             )
 
@@ -113,7 +130,8 @@ fun MoviesSection(
     navController: NavController,
     uiState: ScreenUiState,
     modifier: Modifier = Modifier,
-    onClickDetail: () -> Unit
+    onClickDetail: (Int) -> Unit,
+    onClickSave: (Int, Boolean, Int) -> Unit
 ) {
 
     LazyColumn(
@@ -132,8 +150,12 @@ fun MoviesSection(
                             data = uiState.nowPlayingData,
                             content = {
                                 MovieItemSmallView(
-                                    onClickDetail = onClickDetail,
-                                    data = it
+                                    data = it,
+                                    onClickDetail = {
+                                        onClickDetail(it)
+                                    },
+                                    onClickSave = onClickSave
+
                                 )
                             }
                         )
@@ -145,7 +167,9 @@ fun MoviesSection(
                     HorizontalLargeItemView(
                         uiState.topRatedData,
                         isFling = true,
-                        onClickDetail = onClickDetail
+                        onClickDetail = {
+                            onClickDetail(it)
+                        }
                     )
                 }
             )
@@ -157,7 +181,9 @@ fun MoviesSection(
                             arrangement = Arrangement.spacedBy(12.dp),
                             data = uiState.nowPlayingData,
                             content = {
-                                MovieItemMediumView(onClickDetail = onClickDetail, data = it)
+                                MovieItemMediumView(
+                                    data = it,
+                                    onClickDetail = { onClickDetail(it) })
                             }
                         )
                     }
@@ -309,7 +335,7 @@ fun <T> HorizontalItemView(
     data: List<T>,
     arrangement: Arrangement.HorizontalOrVertical,
     alignment: Alignment.Vertical = Alignment.Top,
-    contentPadding :PaddingValues = PaddingValues(0.dp),
+    contentPadding: PaddingValues = PaddingValues(0.dp),
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
     content: @Composable (T) -> Unit,
@@ -338,7 +364,7 @@ fun HorizontalLargeItemView(
     data: List<Movie>,
     isFling: Boolean,
     state: LazyListState = rememberLazyListState(),
-    onClickDetail: () -> Unit
+    onClickDetail: (Int) -> Unit
 ) {
     LazyRow(
         state = state,
@@ -349,10 +375,10 @@ fun HorizontalLargeItemView(
         itemsIndexed(
             items = data,
             key = { index, movie -> movie.id }
-        ) { index, it ->
+        ) { index, movie ->
             MovieItemLargeView(
-                onClickDetail = onClickDetail,
-                data = it
+                onClickDetail = { onClickDetail(movie.id) },
+                data = movie
             )
         }
     }

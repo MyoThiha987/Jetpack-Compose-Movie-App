@@ -20,9 +20,10 @@ interface MovieDao {
     @Query("SELECT * from movies")
     fun retrieveCacheMovies(): Flow<List<MovieEntity>>
 
-    @Query("UPDATE movies SET isLiked=:isLiked WHERE id=:movieId")
-    suspend fun updateLike(movieId: Int, isLiked: Boolean)
+    @Query("UPDATE movies SET isLiked=:isLiked WHERE movieType=:movieType and id=:movieId")
+    suspend fun updateSaveMovie(movieId: Int, isLiked: Boolean, movieType: Int)
 
     @Query("DELETE from movies WHERE movieType=:movieType")
     suspend fun deleteCacheMovies(movieType: Int)
+
 }

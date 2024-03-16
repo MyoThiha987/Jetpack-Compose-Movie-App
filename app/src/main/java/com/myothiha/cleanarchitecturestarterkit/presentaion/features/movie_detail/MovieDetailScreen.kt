@@ -38,17 +38,18 @@ import kotlin.math.roundToInt
 fun MovieDetailScreen(
     navController: NavController,
     viewModel: MovieDetailViewModel,
-    onBookmarkIconClick: () -> Unit,
     onSearchClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val uiState = viewModel.uiState
+    val uiEvent = viewModel::onEvent
 
     MovieDetailScreen(
         navController = navController,
         uiState = uiState,
-        onBookmarkIconClick = { },
-        onSearchClick = { })
+        uiEvent = uiEvent,
+        onSearchClick = onSearchClick
+    )
 
 }
 
@@ -56,7 +57,7 @@ fun MovieDetailScreen(
 fun MovieDetailScreen(
     navController: NavController,
     uiState: ScreenUiState,
-    onBookmarkIconClick: () -> Unit,
+    uiEvent: (ScreenUiEvent) -> Unit,
     onSearchClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -69,8 +70,7 @@ fun MovieDetailScreen(
         topBar = {
             MovieTopAppBar(
                 navController = navController,
-                onSearchClick,
-                onBookmarkIconClick,
+                onSearchClick = onSearchClick
             )
         },
         containerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -108,6 +108,11 @@ fun MovieDetailScreen(
                             }
                         },
                     timetableScreenScrollState = state,
+                )
+            } ?: Box(modifier = Modifier.fillMaxSize()) {
+                Text(
+                    text = "${uiState.errorMessage}",
+                    modifier = Modifier.align(alignment = Alignment.Center)
                 )
             }
         }
@@ -221,7 +226,7 @@ fun TimetableScreenPreview() {
     MovieDetailScreen(
         navController = rememberNavController(),
         uiState = ScreenUiState(),
-        onBookmarkIconClick = {},
+        uiEvent = {},
         onSearchClick = {}
     )
 }
