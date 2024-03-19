@@ -78,6 +78,8 @@ dependencies {
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.bundles.accompanish.pager)
     implementation(libs.blur)
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.accompanist.systemuicontroller)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

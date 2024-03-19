@@ -47,9 +47,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.myothiha.cleanarchitecturestarterkit.R
-import com.myothiha.cleanarchitecturestarterkit.presentaion.features.movie_detail.HorizontalTextView
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.home.HorizontalItemView
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.home.TitleAndContent
+import com.myothiha.cleanarchitecturestarterkit.presentaion.features.movie_detail.HorizontalTextView
 import com.myothiha.domain.model.Cast
 import com.myothiha.domain.model.Genre
 import com.myothiha.domain.model.MovieFullDetail
@@ -76,7 +76,7 @@ fun MovieTopAppBar(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_back_arrow),
                     contentDescription = "",
-                    tint = Color.Black
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
         },
@@ -87,7 +87,7 @@ fun MovieTopAppBar(
                 Icon(
                     painterResource(id = R.drawable.ic_favourite),
                     contentDescription = "",
-                    tint = Color.Black
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
         },
@@ -134,8 +134,8 @@ fun MovieDetailSheetContent(data: MovieFullDetail) {
         )
         HorizontalItemView(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp),
+                .fillMaxWidth(),
+               // .padding(start = 16.dp, end = 16.dp),
             arrangement = Arrangement.Center,
             alignment = Alignment.CenterVertically,
             data = data.movieDetail?.genres.orEmpty()
@@ -189,7 +189,7 @@ fun LazyGridScope.movieInfo(data: MovieFullDetail) {
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth()
                 .background(
-                    color = Color.White.copy(alpha = 0.2f),
+                    color = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.2f),
                     shape = RoundedCornerShape(12.dp)
                 )
                 .border(
@@ -366,6 +366,10 @@ fun CastAndCrewItemView(modifier: Modifier = Modifier, data: Cast) {
                 Text(
                     modifier = Modifier,
                     text = data.originalName,
+                    style = TextStyle(
+                        color = Color.DarkGray,
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
                     fontSize = 14.sp,
                     lineHeight = 20.sp,
                     maxLines = 2
@@ -379,6 +383,7 @@ fun CastAndCrewItemView(modifier: Modifier = Modifier, data: Cast) {
 @Composable
 fun CompanyItemView(modifier: Modifier = Modifier, data: ProductionCompany) {
     Card(
+        contentColor =  MaterialTheme.colorScheme.surfaceVariant,
         modifier = modifier.fillMaxHeight(),
         shape = RoundedCornerShape(12.dp),
         elevation = 0.dp
@@ -401,6 +406,10 @@ fun CompanyItemView(modifier: Modifier = Modifier, data: ProductionCompany) {
                 Text(
                     modifier = Modifier,
                     text = data.name,
+                    style = TextStyle(
+                        color = Color.DarkGray,
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
                     fontSize = 14.sp,
                     lineHeight = 20.sp,
                     maxLines = 2

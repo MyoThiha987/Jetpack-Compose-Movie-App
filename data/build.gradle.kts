@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.devToolsKsp)
     alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.kotlinXSerialization)
+    alias(libs.plugins.googleProtobuf)
 }
 
 android {
@@ -42,6 +43,8 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.hilt.android)
+    implementation(libs.datastore)
+    implementation(libs.google.protobuf)
     ksp(libs.hilt.compiler)
     ksp(libs.hilt.android.compiler)
     ksp(libs.room.compiler)
@@ -54,4 +57,18 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.18.0"
+    }
+    generateProtoTasks {
+        all().onEach { task ->
+            task.builtins {
+                register("java") { option("lite") }
+                //register("kotlin") { option("lite") }
+            }
+        }
+    }
 }

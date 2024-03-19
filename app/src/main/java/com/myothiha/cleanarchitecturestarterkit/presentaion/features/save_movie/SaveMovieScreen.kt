@@ -2,6 +2,7 @@ package com.myothiha.cleanarchitecturestarterkit.presentaion.features.save_movie
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -15,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.home.LoadingView
@@ -56,12 +56,12 @@ fun SaveMovieScreen(
         Scaffold(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
-                .padding(horizontal = 16.dp),
+                .padding(bottom = paddingValues.calculateBottomPadding()),
+            contentWindowInsets = WindowInsets(16.dp, 16.dp, 16.dp, 16.dp),
             topBar = {
-                TopAppBar(title = { Text(text = "Favourite Movies")})
+                TopAppBar(title = { Text(text = "Favourite Movies") })
             },
-            contentColor = Color.Black.copy(alpha = 0.5f),
+            contentColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.5f),
         ) {
             LazyVerticalGrid(
                 modifier = Modifier,

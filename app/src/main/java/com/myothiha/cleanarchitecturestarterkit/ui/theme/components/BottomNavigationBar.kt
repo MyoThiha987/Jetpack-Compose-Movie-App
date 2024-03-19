@@ -86,7 +86,7 @@ fun NavigationBar(
     Column(modifier = Modifier.fillMaxWidth()) {
         HorizontalDivider(color = Violet, thickness = 1.dp)
         androidx.compose.material3.NavigationBar(
-            containerColor = Color.White,
+            containerColor = MaterialTheme.colorScheme.background,
             modifier = modifier
         ) {
             navItemList.value.forEach { destination ->
@@ -138,7 +138,7 @@ fun RowScope.BottomNavigationBarItem(
         },
         colors = NavigationBarItemDefaults.colors(
             selectedIconColor = Violet,
-            unselectedIconColor = Color.Green,
+            unselectedIconColor = Green,
             indicatorColor = Color.Transparent,
             selectedTextColor = Violet,
             unselectedTextColor = Green,

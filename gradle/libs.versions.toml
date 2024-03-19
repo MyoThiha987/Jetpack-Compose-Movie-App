@@ -25,7 +25,12 @@ navigation_compose = "2.7.7"
 appcompat = "1.6.1"
 material = "1.11.0"
 accompanish-pager-indicator = "0.28.0"
-blur ="0.6.2"
+accompanist = "0.32.0"
+blur = "0.6.2"
+datastore = "1.0.0"
+google_protobuf = "3.18.0"
+protobuf = "0.9.4"
+androidx-core-splashscreen = "1.0.1"
 
 
 [libraries]
@@ -75,7 +80,12 @@ appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "a
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 accompanish-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanish-pager-indicator" }
 accompanish-pager-indicator = { group = "com.google.accompanist", name = "accompanist-pager-indicators", version.ref = "accompanish-pager-indicator" }
-blur = {module ="dev.chrisbanes.haze:haze-materials",version.ref ="blur"}
+blur = { module = "dev.chrisbanes.haze:haze-materials", version.ref = "blur" }
+datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
+google-protobuf = { module = "com.google.protobuf:protobuf-javalite", version.ref = "google_protobuf" }
+accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-core-splashscreen" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -85,9 +95,10 @@ kotlinXSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 devToolsKsp = { id = "com.google.devtools.ksp", version.ref = "devtools-ksp" }
 hiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
+googleProtobuf = { id = "com.google.protobuf", version.ref = "protobuf" }
 
 [bundles]
-coroutine =["coroutines-android","coroutines-core","coroutines-play-services","coroutines-test","core-ktx"]
-room = ["room-ktx","room-runtime", "room-paging"]
+coroutine = ["coroutines-android", "coroutines-core", "coroutines-play-services", "coroutines-test", "core-ktx"]
+room = ["room-ktx", "room-runtime", "room-paging"]
 ktor = ["ktor-client-android", "ktor-client-core", "ktor-client-negotiation", "ktor-client-okhttp", "ktor-logging"]
-accompanish-pager =["accompanish-pager","accompanish-pager-indicator"]
+accompanish-pager = ["accompanish-pager", "accompanish-pager-indicator"]

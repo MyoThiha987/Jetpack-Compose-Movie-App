@@ -23,6 +23,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SegmentedButtonDefaults.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,12 +32,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.myothiha.cleanarchitecturestarterkit.R
 import com.myothiha.cleanarchitecturestarterkit.navigation.AppDestination
+import com.myothiha.cleanarchitecturestarterkit.ui.theme.Violet
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.CarouselMovieView
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.MovieItemLargeView
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.MovieItemMediumView
@@ -208,9 +211,7 @@ fun CategoryAndContent(
         ) {
             Text(
                 text = text,
-                style = MaterialTheme.typography.titleLarge.copy(
-                    color = Color.Black
-                ),
+                style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier
                     .paddingFromBaseline(top = 16.dp)
                     .padding(horizontal = 16.dp)
@@ -244,9 +245,7 @@ fun TitleAndContent(
         ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleLarge.copy(
-                    color = Color.Black
-                ),
+                style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier
                     .paddingFromBaseline(top = 16.dp)
                     .padding(horizontal = 16.dp)
@@ -274,7 +273,7 @@ fun LoadingView() {
 fun HeaderSection(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
-            .padding(top = 16.dp)
+            .padding(vertical = 16.dp)
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
             .wrapContentHeight(),
@@ -295,18 +294,10 @@ fun WelcomeView(modifier: Modifier = Modifier) {
     ) {
         Text(
             modifier = Modifier.fillMaxWidth(),
+            style = TextStyle(color = MaterialTheme.colorScheme.onSurface),
             text = "Hi,Myo Thiha",
-            color = Color.Black,
             fontSize = 16.sp,
             lineHeight = 21.sp
-        )
-
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = "Welcome back",
-            color = Color.Black,
-            fontSize = 20.sp,
-            lineHeight = 20.sp
         )
     }
 }
@@ -317,15 +308,17 @@ fun IconsRowView() {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        Image(
+        androidx.compose.material3.Icon(
             modifier = Modifier.size(32.dp),
             painter = painterResource(id = R.drawable.ic_search),
-            contentDescription = null
+            tint =  MaterialTheme.colorScheme.primary,
+            contentDescription = ""
         )
-        Image(
+        androidx.compose.material3.Icon(
             modifier = Modifier.size(32.dp),
             painter = painterResource(id = R.drawable.ic_notification),
-            contentDescription = null
+            tint = MaterialTheme.colorScheme.primary,
+            contentDescription = ""
         )
     }
 }

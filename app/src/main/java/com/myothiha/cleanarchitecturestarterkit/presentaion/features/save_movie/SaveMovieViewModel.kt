@@ -45,7 +45,6 @@ class SaveMovieViewModel @Inject constructor(
     private fun fetchSavedMoviesFromCache() {
         viewModelScope.launch {
             uiState = uiState.copy(isLoading = true)
-            delay(1000)
             fetchBookmarkMovieUseCase.execute(params = Unit).collectLatest {
                 uiState = uiState.copy(
                     isLoading = false, data = it

@@ -1,0 +1,13 @@
+syntax = "proto3";
+option java_package = "com.myothiha.cleanarchitecturestarterkit.data";
+option java_multiple_files = true;
+
+message UserProto{
+  ThemeProto theme = 1;
+}
+
+enum ThemeProto{
+  FOLLOW_SYSTEM = 0;
+  LIGHT = 1;
+  DARK = 2;
+}

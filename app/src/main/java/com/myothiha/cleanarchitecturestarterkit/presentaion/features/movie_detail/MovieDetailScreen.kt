@@ -73,7 +73,7 @@ fun MovieDetailScreen(
                 onSearchClick = onSearchClick
             )
         },
-        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+        containerColor = MaterialTheme.colorScheme.surface,
         contentWindowInsets = WindowInsets(0.dp),
     ) { innerPadding ->
         Box(
@@ -95,7 +95,7 @@ fun MovieDetailScreen(
                     data = it,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(top = 200.dp)
+                        .padding(top = 188.dp)
                         .layout { measurable, constraints ->
                             val placeable = measurable.measure(
                                 constraints.copy(maxHeight = constraints.maxHeight - state.sheetScrollOffset.roundToInt()),

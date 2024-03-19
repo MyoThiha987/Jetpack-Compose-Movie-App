@@ -2,6 +2,7 @@ package com.myothiha.cleanarchitecturestarterkit.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -11,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.accout.AccountScreen
+import com.myothiha.cleanarchitecturestarterkit.presentaion.features.accout.AccountViewModel
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.home.HomeScreen
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.home.HomeViewModel
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.movie_detail.MovieDetailScreen
@@ -27,12 +29,12 @@ import com.myothiha.domain.utils.extension.orZero
 @Composable
 fun AppNavigation(
     navHostController: NavHostController,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues = PaddingValues(0.dp)
 ) {
     NavHost(navController = navHostController, startDestination = AppGraph.HOME) {
         homeNavGraph(navHostController = navHostController, paddingValues)
-        saveNavGraph(navHostController = navHostController,paddingValues = paddingValues)
-        accountNavGraph(navHostController = navHostController)
+        saveNavGraph(navHostController = navHostController, paddingValues = paddingValues)
+        accountNavGraph(navHostController = navHostController, paddingValues = paddingValues)
         composable(
             route = AppDestination.MovieDetailScreen.route,
             arguments = listOf(navArgument("id") {
@@ -86,11 +88,17 @@ fun NavGraphBuilder.saveNavGraph(
 }
 
 fun NavGraphBuilder.accountNavGraph(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    paddingValues: PaddingValues
 ) {
     navigation(startDestination = AppDestination.AccountScreen.route, route = AppGraph.ACCOUNT) {
         composable(route = AppDestination.AccountScreen.route) {
-            AccountScreen(navController = navHostController)
+            val viewmodel: AccountViewModel = hiltViewModel()
+            AccountScreen(
+                navController = navHostController,
+                viewModel = viewmodel,
+                paddingValues = paddingValues
+            )
         }
     }
 }
