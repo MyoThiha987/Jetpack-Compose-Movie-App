@@ -1,5 +1,6 @@
 package com.myothiha.cleanarchitecturestarterkit
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,6 +14,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
@@ -23,7 +26,7 @@ import com.myothiha.cleanarchitecturestarterkit.presentaion.features.home.MainSc
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.CleanArchitectureStarterKitTheme
 import com.myothiha.domain.model.Theme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
+import java.util.Locale
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -33,6 +36,7 @@ class MainActivity : ComponentActivity() {
             viewModel.uiState.isLoading
         }
         super.onCreate(savedInstanceState)
+
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
@@ -43,6 +47,9 @@ class MainActivity : ComponentActivity() {
             LaunchedEffect(systemUiController, darkTheme) {
                 systemUiController.systemBarsDarkContentEnabled = !darkTheme
             }
+
+            SetLanguage(context = applicationContext, language = uiState.data.language)
+
             CleanArchitectureStarterKitTheme(darkTheme = darkTheme) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -57,9 +64,22 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
+fun SetLanguage(context: Context, language: String) {
+    context.resources.apply {
+        val locale = Locale(language)
+        val configuration = LocalConfiguration.current
+        configuration.setLocale(locale)
+        val resources = LocalContext.current.resources
+        resources.updateConfiguration(configuration, resources.displayMetrics)
+    }
+}
+
+
+
+@Composable
 private fun shouldUseDarkTheme(uiState: ScreenUiState): Boolean {
     if (uiState.isLoading) return isSystemInDarkTheme()
-    return when (uiState.theme) {
+    return when (uiState.data.theme) {
         Theme.SYSTEM -> isSystemInDarkTheme()
         Theme.LIGHT -> false
         Theme.DARK -> true
@@ -73,6 +93,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxWidth()
     )
 }
+
 
 /*@Preview(showBackground = true)
 @Composable

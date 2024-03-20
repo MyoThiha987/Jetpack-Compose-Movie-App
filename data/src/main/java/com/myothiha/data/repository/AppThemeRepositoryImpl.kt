@@ -2,7 +2,7 @@ package com.myothiha.data.repository
 
 import android.content.Context
 import com.myothiha.cleanarchitecturestarterkit.data.ThemeProto
-import com.myothiha.data.cache.userProtoDatStore
+import com.myothiha.data.cache.datastore.userProtoDatStore
 import com.myothiha.domain.model.Theme
 import com.myothiha.domain.model.User
 import com.myothiha.domain.repository.AppThemeRepository

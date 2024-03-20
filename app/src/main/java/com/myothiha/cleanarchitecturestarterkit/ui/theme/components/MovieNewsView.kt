@@ -116,8 +116,9 @@ fun MovieGridItemView(
     onClickDetail: (Int) -> Unit,
     onClickSave: (Int, Boolean, Int) -> Unit
 ) {
-    Box(modifier = modifier
-        .fillMaxWidth()
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
         //.padding(16.dp)
     ) {
         Column {

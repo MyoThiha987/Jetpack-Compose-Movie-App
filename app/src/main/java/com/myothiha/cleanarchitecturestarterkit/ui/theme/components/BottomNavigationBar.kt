@@ -1,5 +1,6 @@
 package com.myothiha.cleanarchitecturestarterkit.ui.theme.components
 
+import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
@@ -20,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -110,7 +112,7 @@ fun RowScope.BottomNavigationBarItem(
     NavigationBarItem(
         label = {
             Text(
-                text = screen.label,
+                text = stringResource(id = screen.label),
                 style = MaterialTheme.typography.labelSmall
             )
         },
@@ -159,17 +161,17 @@ private fun shouldShowBottomBar(
 
 val bottomNavList = listOf(
     BottomNavigationItem(
-        label = "Home",
+        label = R.string.lbl_home,
         icon = R.drawable.ic_home,
         route = AppDestination.HomeScreen.route
     ),
     BottomNavigationItem(
-        label = "Save",
+        label = R.string.lbl_bookmark,
         icon = R.drawable.ic_save,
         route = AppDestination.SaveMovieScreen.route
     ),
     BottomNavigationItem(
-        label = "Account",
+        label = R.string.lbl_setting,
         icon = R.drawable.ic_user,
         route = AppDestination.AccountScreen.route
     )
@@ -177,7 +179,7 @@ val bottomNavList = listOf(
 )
 
 data class BottomNavigationItem(
-    val label: String,
+    @StringRes val label: Int,
     val icon: Int,
     val route: String
 )

@@ -1,4 +1,4 @@
-package com.myothiha.data.cache
+package com.myothiha.data.cache.datastore
 
 import android.content.Context
 import androidx.datastore.core.CorruptionException

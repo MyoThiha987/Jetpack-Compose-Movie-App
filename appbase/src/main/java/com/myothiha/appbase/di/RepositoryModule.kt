@@ -1,7 +1,9 @@
 package com.myothiha.appbase.di
 
+import com.myothiha.data.repository.AppLanguageRepositoryImpl
 import com.myothiha.data.repository.AppThemeRepositoryImpl
 import com.myothiha.data.repository.MoviesRepositoryImpl
+import com.myothiha.domain.repository.AppLanguageRepository
 import com.myothiha.domain.repository.AppThemeRepository
 import com.myothiha.domain.repository.MoviesRepository
 import dagger.Binds
@@ -22,5 +24,8 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun provideUserDataRepository(impl: AppThemeRepositoryImpl): AppThemeRepository
+
+    @Binds
+    abstract fun provideAppLanguageRepository(impl: AppLanguageRepositoryImpl): AppLanguageRepository
 
 }

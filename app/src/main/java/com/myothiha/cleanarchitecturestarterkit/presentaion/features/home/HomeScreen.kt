@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -146,7 +147,7 @@ fun MoviesSection(
                 CarouselMovieView(data = uiState.upcomingData)
             if (uiState.nowPlayingData.isNotEmpty())
                 CategoryAndContent(
-                    text = "NowPlaying",
+                    text = stringResource(id = R.string.lbl_nowplaying),
                     content = {
                         HorizontalItemView(
                             arrangement = Arrangement.spacedBy(12.dp),
@@ -165,7 +166,7 @@ fun MoviesSection(
                     }
                 )
             if (uiState.topRatedData.isNotEmpty()) CategoryAndContent(
-                text = "TopRate",
+                text = stringResource(id = R.string.lbl_toprate),
                 content = {
                     HorizontalLargeItemView(
                         uiState.topRatedData,
@@ -178,7 +179,7 @@ fun MoviesSection(
             )
             if (uiState.popularData.isNotEmpty()) {
                 CategoryAndContent(
-                    text = "Popular",
+                    text = stringResource(id = R.string.lbl_popular),
                     content = {
                         HorizontalItemView(
                             arrangement = Arrangement.spacedBy(12.dp),
@@ -211,13 +212,13 @@ fun CategoryAndContent(
         ) {
             Text(
                 text = text,
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleMedium.copy(fontSize = 18.sp),
                 modifier = Modifier
                     .paddingFromBaseline(top = 16.dp)
                     .padding(horizontal = 16.dp)
             )
             Text(
-                text = "See more",
+                text = stringResource(id = R.string.lbl_seemore),
                 modifier = Modifier
                     .paddingFromBaseline(top = 16.dp)
                     .padding(horizontal = 16.dp)

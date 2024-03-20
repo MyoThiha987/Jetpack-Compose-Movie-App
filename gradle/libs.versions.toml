@@ -31,6 +31,8 @@ datastore = "1.0.0"
 google_protobuf = "3.18.0"
 protobuf = "0.9.4"
 androidx-core-splashscreen = "1.0.1"
+activity = "1.8.0"
+constraintlayout = "2.1.4"
 
 
 [libraries]
@@ -85,6 +87,8 @@ datastore = { module = "androidx.datastore:datastore", version.ref = "datastore"
 google-protobuf = { module = "com.google.protobuf:protobuf-javalite", version.ref = "google_protobuf" }
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-core-splashscreen" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 
 
 [plugins]

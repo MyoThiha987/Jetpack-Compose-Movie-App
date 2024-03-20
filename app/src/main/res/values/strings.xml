@@ -3,4 +3,13 @@
     <string name="theme_system">System</string>
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
+    <string name="language_en">English</string>
+    <string name="language_myanmar">Myanmar</string>
+    <string name="lbl_home">Home</string>
+    <string name="lbl_bookmark">Bookmark</string>
+    <string name="lbl_setting">Setting</string>
+    <string name="lbl_nowplaying">NowPlaying</string>
+    <string name="lbl_toprate">TopRate</string>
+    <string name="lbl_popular">Popular</string>
+    <string name="lbl_seemore">See more</string>
 </resources>

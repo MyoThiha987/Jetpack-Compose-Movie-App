@@ -10,7 +10,10 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 
 private val DarkColorScheme = darkColorScheme(
     primary = Color.White,
@@ -50,7 +53,12 @@ fun CleanArchitectureStarterKitTheme(
         if (darkTheme) DarkColorScheme else LightColorScheme
     }
 
-    CompositionLocalProvider{
+    CompositionLocalProvider(
+        LocalLayoutDirection provides
+                if (LocalConfiguration.current.layoutDirection == LayoutDirection.Rtl.ordinal)
+                    LayoutDirection.Rtl
+                else LayoutDirection.Ltr
+    ) {
         MaterialTheme(
             colorScheme = colorScheme,
             content = content

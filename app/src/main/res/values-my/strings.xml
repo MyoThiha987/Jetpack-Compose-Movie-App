@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Clean Architecture Starter Kit</string>
+    <string name="theme_system">စနစ်</string>
+    <string name="theme_light">နေ့</string>
+    <string name="theme_dark">ည</string>
+    <string name="language_en">အင်းဂလိပ်</string>
+    <string name="language_myanmar">မြန်မာ</string>
+    <string name="lbl_home">မူလနေရာ</string>
+    <string name="lbl_bookmark">သိမ်းဆည်းမှုများ</string>
+    <string name="lbl_setting">အပြင်အဆင်</string>
+    <string name="lbl_nowplaying">ယခုပြသနေသော ဇာတ်ကားများ</string>
+    <string name="lbl_toprate">လူကြည့်များသော ဇာတ်ကားများ</string>
+    <string name="lbl_popular">လူကြိုက်များသော ဇာတ်ကားများ</string>
+    <string name="lbl_seemore">ကြည့်ရန်</string>
+</resources>
