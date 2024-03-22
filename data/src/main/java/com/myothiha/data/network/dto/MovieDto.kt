@@ -22,6 +22,8 @@ data class MovieDto(
     val overview: String?,
     @SerialName("popularity")
     val popularity: Double?,
+    @SerialName("backdrop_path")
+    val backdropPath: String?,
     @SerialName("poster_path")
     val posterPath: String?,
     @SerialName("release_date")
@@ -30,7 +32,7 @@ data class MovieDto(
     val voteAverage: Double?,
     @SerialName("vote_count")
     val voteCount: Int?,
-    val isLiked : Boolean?
+    val isLiked: Boolean?
 )
 
 fun MovieDto.toEntity(movieType: Int): MovieEntity {
@@ -40,6 +42,7 @@ fun MovieDto.toEntity(movieType: Int): MovieEntity {
             originalTitle = originalTitle.orEmpty(),
             overview = overview.orEmpty(),
             popularity = popularity.orZero(),
+            backdropPath = backdropPath.orEmpty(),
             posterPath = posterPath.orEmpty(),
             releaseDate = releaseDate.orEmpty(),
             voteAverage = voteAverage.orZero(),
@@ -57,6 +60,7 @@ fun MovieEntity.toDomain(): Movie {
             originalTitle = originalTitle,
             overview = overview,
             popularity = popularity,
+            backdropPath = backdropPath,
             posterPath = posterPath,
             releaseDate = releaseDate,
             voteAverage = voteAverage,

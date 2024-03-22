@@ -46,7 +46,7 @@ fun MovieItemMediumView(
                 modifier = Modifier
                     .width(250.dp)
                     .height(190.dp),
-                data = data.posterPath
+                data = data.backdropPath
             )
         }
         Text(
@@ -77,7 +77,7 @@ fun MovieItemSmallView(
                 MovieImageView(
                     modifier = Modifier
                         .width(180.dp)
-                        .height(240.dp),
+                        .height(200.dp),
                     data = data.posterPath
                 )
             }
@@ -127,7 +127,7 @@ fun MovieGridItemView(
             }) {
                 MovieImageView(
                     modifier = Modifier
-                        .height(190.dp),
+                        .height(180.dp),
                     data = data.posterPath
                 )
             }
@@ -180,7 +180,7 @@ fun LazyItemScope.MovieItemLargeView(
                 modifier = Modifier
                     .fillParentMaxWidth()
                     .aspectRatio(16f / 9f),
-                data = data.posterPath
+                data = data.backdropPath
             )
         }
     }
@@ -200,7 +200,7 @@ fun <T> MovieImageView(modifier: Modifier = Modifier, data: T) {
 @Preview(showBackground = true)
 fun ItemSmallPreview() {
     MovieItemSmallView(
-        data = Movie(1, "AA", "", 0.0, "", "", 0.0, 0, 0, true),
+        data = Movie(1, "AA", "", 0.0, "", "","", 0.0, 0, 0, true),
         onClickDetail = {},
         onClickSave = { a, b, c -> })
 }

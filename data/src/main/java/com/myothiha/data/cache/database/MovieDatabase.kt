@@ -11,7 +11,7 @@ import com.myothiha.data.cache.entity.MovieEntity
  **/
 @Database(
     entities = [MovieEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class MovieDatabase : RoomDatabase() {

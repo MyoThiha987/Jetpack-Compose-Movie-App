@@ -204,7 +204,7 @@ fun CategoryAndContent(
 ) {
     Column(
         modifier = Modifier.padding(top = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -324,6 +324,7 @@ fun IconsRowView() {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun <T> HorizontalItemView(
     data: List<T>,
@@ -338,6 +339,7 @@ fun <T> HorizontalItemView(
     LazyRow(
         modifier = modifier,
         state = state,
+        flingBehavior = rememberSnapFlingBehavior(lazyListState = state),
         horizontalArrangement = arrangement,
         verticalAlignment = alignment,
         contentPadding = PaddingValues(horizontal = 16.dp),

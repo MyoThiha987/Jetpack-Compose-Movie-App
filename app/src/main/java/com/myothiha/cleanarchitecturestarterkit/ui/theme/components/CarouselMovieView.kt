@@ -9,6 +9,9 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
@@ -36,7 +39,9 @@ fun CarouselMovieView(
     data: List<Movie>,
     pagerState: PagerState = rememberPagerState(initialPage = 0)
 ) {
-    val images = data.map { it.posterPath }
+    val images by remember {
+        mutableStateOf(data.map { it.backdropPath })
+    }
     //val pagerState = com.google.accompanist.pager.rememberPagerState(initialPage = 0)
     Column(modifier = modifier.padding(top = 16.dp)) {
         com.google.accompanist.pager.HorizontalPager(

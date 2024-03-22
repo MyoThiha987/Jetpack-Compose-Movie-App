@@ -2,6 +2,7 @@ package com.myothiha.cleanarchitecturestarterkit.presentaion.features.accout
 
 import android.content.Context
 import android.content.Intent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,7 +18,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -27,9 +33,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.myothiha.cleanarchitecturestarterkit.R
+import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.CustomBottomSheet
+import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.LanguageList
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.ProfileView
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.SettingItemView
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.SettingView
+import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.ThemeList
+import kotlinx.coroutines.launch
 
 /**
  * @Author myothiha
@@ -75,6 +85,46 @@ fun AccountScreen(
         contentColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.5f),
     ) {
 
+        var showBottomSheet by remember {
+            mutableStateOf(false)
+        }
+
+        var bottomSheetContentType by remember {
+            mutableIntStateOf(0)
+        }
+
+        if (showBottomSheet)
+            CustomBottomSheet(
+                content = {
+                    if (bottomSheetContentType == 0)
+                        ThemeList(
+                            theme = uiState.data.theme,
+                            onSelectTheme = {
+                                uiEvent(ScreenUiEvent.onSelectTheme(it))
+                                showBottomSheet = false
+                            }
+                        )
+                    else
+                        LanguageList(
+                            language = uiState.data.language,
+                            onSelectLanguage = {
+                                scope.launch {
+                                    uiEvent(
+                                        ScreenUiEvent.onSelectLanguage(
+                                            context = context,
+                                            language = it
+                                        )
+                                    )
+                                    showBottomSheet = false
+                                    context.restartActivity()
+                                }
+                            }
+                        )
+                }
+            ) {
+                showBottomSheet = false
+            }
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -90,6 +140,10 @@ fun AccountScreen(
                     content = {
                         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                             SettingItemView(
+                                modifier = Modifier.clickable {
+                                    bottomSheetContentType = 0
+                                    showBottomSheet = true
+                                },
                                 title = R.string.lbl_theme,
                                 subtitle = "",
                                 isShowSubtitle = false,
@@ -97,6 +151,10 @@ fun AccountScreen(
                                 tailIcon = R.drawable.ic_arrow_right
                             )
                             SettingItemView(
+                                modifier = Modifier.clickable {
+                                    bottomSheetContentType = 1
+                                    showBottomSheet = true
+                                },
                                 title = R.string.lbl_language,
                                 subtitle = uiState.data.language,
                                 isShowSubtitle = true,
@@ -109,6 +167,9 @@ fun AccountScreen(
                 SettingView(title = R.string.lbl_security,
                     content = {
                         SettingItemView(
+                            modifier = Modifier.clickable {
+                                // showBottomSheet = true
+                            },
                             title = R.string.lbl_fingerprint,
                             subtitle = uiState.data.language,
                             isShowSubtitle = false,
