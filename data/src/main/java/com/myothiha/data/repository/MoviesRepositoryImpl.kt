@@ -1,5 +1,7 @@
 package com.myothiha.data.repository
 
+import androidx.paging.PagingData
+import androidx.paging.map
 import com.myothiha.data.datasources.MoviesCacheDataSource
 import com.myothiha.data.datasources.MoviesNetworkDataSource
 import com.myothiha.data.network.dto.toDomain
@@ -14,6 +16,7 @@ import com.myothiha.domain.repository.MoviesRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 /**
@@ -32,19 +35,19 @@ class MoviesRepositoryImpl @Inject constructor(
             movieType = UPCOMING
         )
 
-        val nowPlayingMovies = dataSource.fetchNowPlayingMovies()
+        val nowPlayingMovies = dataSource.fetchNowPlayingMovies(page = 1)
         cacheDataSource.saveMovies(
             data = nowPlayingMovies.map { it.toEntity(movieType = NOW_PLAYING) },
             movieType = NOW_PLAYING
         )
 
-        val topRatedMovies = dataSource.fetchTopRatedMovies()
+        val topRatedMovies = dataSource.fetchTopRatedMovies(page = 1)
         cacheDataSource.saveMovies(
             data = topRatedMovies.map { it.toEntity(movieType = TOP_RATED) },
             movieType = TOP_RATED
         )
 
-        val popularMovies = dataSource.fetchPopularMovies()
+        val popularMovies = dataSource.fetchPopularMovies(page = 1)
         cacheDataSource.saveMovies(
             data = popularMovies.map { it.toEntity(movieType = POPULAR) },
             movieType = POPULAR
@@ -73,5 +76,12 @@ class MoviesRepositoryImpl @Inject constructor(
 
     override suspend fun retrieveSavedMovies(): Flow<List<Movie>> {
         return cacheDataSource.retrieveBookmarkCacheMovies()
+    }
+
+    override fun fetchPagingMovies(movieType: Int): Flow<PagingData<Movie>> {
+        return dataSource.fetchPagingMovies(movieType = movieType)
+            .map { pagingData ->
+                pagingData.map { it.toDomain(movieType = movieType) }
+            }
     }
 }

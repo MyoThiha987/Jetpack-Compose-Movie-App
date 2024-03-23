@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.myothiha.cleanarchitecturestarterkit.R
+import com.myothiha.cleanarchitecturestarterkit.presentaion.features.home.noRippleClickable
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.CustomBottomSheet
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.LanguageList
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.ProfileView
@@ -140,7 +141,7 @@ fun AccountScreen(
                     content = {
                         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                             SettingItemView(
-                                modifier = Modifier.clickable {
+                                modifier = Modifier.noRippleClickable {
                                     bottomSheetContentType = 0
                                     showBottomSheet = true
                                 },
@@ -151,7 +152,7 @@ fun AccountScreen(
                                 tailIcon = R.drawable.ic_arrow_right
                             )
                             SettingItemView(
-                                modifier = Modifier.clickable {
+                                modifier = Modifier.noRippleClickable {
                                     bottomSheetContentType = 1
                                     showBottomSheet = true
                                 },
@@ -167,7 +168,7 @@ fun AccountScreen(
                 SettingView(title = R.string.lbl_security,
                     content = {
                         SettingItemView(
-                            modifier = Modifier.clickable {
+                            modifier = Modifier.noRippleClickable {
                                 // showBottomSheet = true
                             },
                             title = R.string.lbl_fingerprint,

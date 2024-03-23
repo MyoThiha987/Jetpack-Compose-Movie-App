@@ -17,4 +17,7 @@
     <string name="lbl_general">General</string>
     <string name="lbl_security">Security</string>
     <string name="lbl_fingerprint">FingerPrint</string>
+    <string name="lbl_error">Fetch Error</string>
+    <string name="lbl_retry">Retry</string>
+    <string name="lbl_favourite">Favourite Movies</string>
 </resources>

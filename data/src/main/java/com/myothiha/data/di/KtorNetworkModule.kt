@@ -107,12 +107,12 @@ object KtorNetworkModule {
 
     }
 
-    fun HttpRequestBuilder.pathUrl(path: String){
+    fun HttpRequestBuilder.pathUrl(path: String,page : Int = 1){
         url {
             takeFrom(Constants.BASE_URL)
             path("3", path)
             parameter("language", "en")
-            parameter("page", 1)
+            parameter("page", page)
         }
     }
 }

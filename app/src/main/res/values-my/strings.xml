@@ -18,4 +18,7 @@
     <string name="lbl_general">အထွေထွေ</string>
     <string name="lbl_security">လုံခြုံရေး</string>
     <string name="lbl_fingerprint">လက်ဗွေစနစ်</string>
+    <string name="lbl_error">ဒေတာမရရှိပါ။</string>
+    <string name="lbl_retry">ပြန်ကြိုးစားမယ်</string>
+    <string name="lbl_favourite">ကြိုက်နှစ်သက်သော ဇာတ်ကားများ</string>
 </resources>

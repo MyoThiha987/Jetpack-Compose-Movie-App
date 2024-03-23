@@ -124,7 +124,6 @@ fun RowScope.BottomNavigationBarItem(
         } != true,
         onClick = {
             navController.navigate(screen.route) {
-                navController.popBackStack()
                 popUpTo(navController.graph.findStartDestination().id) {
                     saveState = true
                 }

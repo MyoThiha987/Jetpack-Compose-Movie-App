@@ -14,6 +14,14 @@ sealed class AppDestination(val route: String) {
 
     }
 
+    data object SeeMoreMoviesScreen :
+        AppDestination(route = "seemore_movies?movie_type={movieType}") {
+        fun args(movieType: Int = 0): String {
+            return "seemore_movies?movie_type=$movieType"
+        }
+
+    }
+
     data object SaveMovieScreen : AppDestination(route = "save_movie")
     data object AccountScreen : AppDestination(route = "account")
 }

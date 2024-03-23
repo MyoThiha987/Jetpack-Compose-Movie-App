@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -90,6 +92,17 @@ fun MovieDetailScreen(
                         )
                     },
             )
+
+            if (uiState.isLoading)
+                Box(modifier = Modifier.fillMaxSize()) {
+                    CircularProgressIndicator(
+                        modifier = modifier
+                            .size(60.dp)
+                            .padding(10.dp)
+                            .align(alignment = Alignment.Center)
+                    )
+                }
+
             uiState.movieDetail?.let {
                 MovieDetailBodySheet(
                     data = it,
@@ -109,15 +122,19 @@ fun MovieDetailScreen(
                         },
                     timetableScreenScrollState = state,
                 )
-            } ?: Box(modifier = Modifier.fillMaxSize()) {
-                Text(
-                    text = "${uiState.errorMessage}",
-                    modifier = Modifier.align(alignment = Alignment.Center)
-                )
             }
+
+            if (uiState.errorMessage != null)
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Text(
+                        text = "${uiState.errorMessage}",
+                        modifier = Modifier.align(alignment = Alignment.Center)
+                    )
+                }
         }
     }
 }
+
 
 @Composable
 fun HorizontalTextView(text: String, subText: String) {

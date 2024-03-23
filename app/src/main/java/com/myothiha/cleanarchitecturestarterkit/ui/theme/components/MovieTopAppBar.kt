@@ -81,7 +81,7 @@ fun MovieTopAppBar(
             }
         },
         actions = {
-            IconButton(
+            /*IconButton(
                 onClick = { },
             ) {
                 Icon(
@@ -89,7 +89,7 @@ fun MovieTopAppBar(
                     contentDescription = "",
                     tint = MaterialTheme.colorScheme.onSurface
                 )
-            }
+            }*/
         },
         colors = TopAppBarDefaults.largeTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainer,

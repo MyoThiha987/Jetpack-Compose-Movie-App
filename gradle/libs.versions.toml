@@ -33,6 +33,7 @@ protobuf = "0.9.4"
 androidx-core-splashscreen = "1.0.1"
 activity = "1.8.0"
 constraintlayout = "2.1.4"
+paging="3.2.1"
 
 
 [libraries]
@@ -89,7 +90,9 @@ accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-core-splashscreen" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-
+paging-common = { group = "androidx.paging", name = "paging-common", version.ref = "paging" }
+paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
+paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -106,3 +109,4 @@ coroutine = ["coroutines-android", "coroutines-core", "coroutines-play-services"
 room = ["room-ktx", "room-runtime", "room-paging"]
 ktor = ["ktor-client-android", "ktor-client-core", "ktor-client-negotiation", "ktor-client-okhttp", "ktor-logging"]
 accompanish-pager = ["accompanish-pager", "accompanish-pager-indicator"]
+compose-paging =["paging-common","paging-runtime","paging-compose"]

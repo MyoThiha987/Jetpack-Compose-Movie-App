@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.myothiha.cleanarchitecturestarterkit.R
+import com.myothiha.cleanarchitecturestarterkit.presentaion.features.home.noRippleClickable
 import com.myothiha.domain.model.Movie
 
 @Composable
@@ -77,14 +78,14 @@ fun MovieItemSmallView(
                 MovieImageView(
                     modifier = Modifier
                         .width(180.dp)
-                        .height(200.dp),
+                        .height(180.dp),
                     data = data.posterPath
                 )
             }
             Text(
                 modifier = Modifier
                     .padding(top = 6.dp)
-                    .width(180.dp),
+                    .padding(horizontal = 4.dp),
                 text = data.originalTitle,
                 fontSize = 18.sp,
                 maxLines = 1,
@@ -98,7 +99,7 @@ fun MovieItemSmallView(
                 .padding(8.dp)
                 .size(32.dp)
                 .align(alignment = Alignment.TopEnd)
-                .clickable {
+                .noRippleClickable {
                     onClickSave(data.id, data.isLiked, data.movieType)
                 },
             painter = painterResource(id = R.drawable.ic_favourite),
@@ -127,13 +128,13 @@ fun MovieGridItemView(
             }) {
                 MovieImageView(
                     modifier = Modifier
-                        .height(180.dp),
+                        .height(160.dp),
                     data = data.posterPath
                 )
             }
             Text(
                 modifier = Modifier
-                    .padding(top = 6.dp)
+                    .padding(6.dp)
                     .width(180.dp),
                 style = TextStyle(
                     color = MaterialTheme.colorScheme.onSurface
@@ -151,7 +152,7 @@ fun MovieGridItemView(
                 .padding(8.dp)
                 .size(32.dp)
                 .align(alignment = Alignment.TopEnd)
-                .clickable {
+                .noRippleClickable {
                     onClickSave(data.id, data.isLiked, data.movieType)
                 },
             painter = painterResource(id = R.drawable.ic_favourite),
@@ -200,7 +201,7 @@ fun <T> MovieImageView(modifier: Modifier = Modifier, data: T) {
 @Preview(showBackground = true)
 fun ItemSmallPreview() {
     MovieItemSmallView(
-        data = Movie(1, "AA", "", 0.0, "", "","", 0.0, 0, 0, true),
+        data = Movie(1, "AA", "", 0.0, "", "", "", 0.0, 0, 0, true),
         onClickDetail = {},
         onClickSave = { a, b, c -> })
 }

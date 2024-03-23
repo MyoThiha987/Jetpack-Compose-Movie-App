@@ -1,10 +1,13 @@
 package com.myothiha.cleanarchitecturestarterkit.presentaion.features.home
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,12 +26,13 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SegmentedButtonDefaults.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -40,7 +44,6 @@ import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.myothiha.cleanarchitecturestarterkit.R
 import com.myothiha.cleanarchitecturestarterkit.navigation.AppDestination
-import com.myothiha.cleanarchitecturestarterkit.ui.theme.Violet
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.CarouselMovieView
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.MovieItemLargeView
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.MovieItemMediumView
@@ -115,6 +118,9 @@ fun HomeScreen(
                             movieType = movieType
                         )
                     )
+                },
+                onClickSeeMore = {
+                    navController.navigate(AppDestination.SeeMoreMoviesScreen.args(movieType = it))
                 }
             )
 
@@ -135,7 +141,8 @@ fun MoviesSection(
     uiState: ScreenUiState,
     modifier: Modifier = Modifier,
     onClickDetail: (Int) -> Unit,
-    onClickSave: (Int, Boolean, Int) -> Unit
+    onClickSave: (Int, Boolean, Int) -> Unit,
+    onClickSeeMore: (Int) -> Unit
 ) {
 
     LazyColumn(
@@ -148,6 +155,10 @@ fun MoviesSection(
             if (uiState.nowPlayingData.isNotEmpty())
                 CategoryAndContent(
                     text = stringResource(id = R.string.lbl_nowplaying),
+                    movieType = 2,
+                    onClickSeeMore = {
+                        onClickSeeMore(it)
+                    },
                     content = {
                         HorizontalItemView(
                             arrangement = Arrangement.spacedBy(12.dp),
@@ -167,6 +178,10 @@ fun MoviesSection(
                 )
             if (uiState.topRatedData.isNotEmpty()) CategoryAndContent(
                 text = stringResource(id = R.string.lbl_toprate),
+                movieType = 3,
+                onClickSeeMore = {
+                    onClickSeeMore(it)
+                },
                 content = {
                     HorizontalLargeItemView(
                         uiState.topRatedData,
@@ -180,6 +195,10 @@ fun MoviesSection(
             if (uiState.popularData.isNotEmpty()) {
                 CategoryAndContent(
                     text = stringResource(id = R.string.lbl_popular),
+                    movieType = 4,
+                    onClickSeeMore = {
+                        onClickSeeMore(it)
+                    },
                     content = {
                         HorizontalItemView(
                             arrangement = Arrangement.spacedBy(12.dp),
@@ -200,6 +219,8 @@ fun MoviesSection(
 @Composable
 fun CategoryAndContent(
     text: String,
+    movieType: Int,
+    onClickSeeMore: (Int) -> Unit,
     content: @Composable () -> Unit
 ) {
     Column(
@@ -220,6 +241,7 @@ fun CategoryAndContent(
             Text(
                 text = stringResource(id = R.string.lbl_seemore),
                 modifier = Modifier
+                    .noRippleClickable { onClickSeeMore(movieType) }
                     .paddingFromBaseline(top = 16.dp)
                     .padding(horizontal = 16.dp)
             )
@@ -264,7 +286,8 @@ fun LoadingView() {
         CircularProgressIndicator(
             color = Color.Black,
             modifier = Modifier
-                .wrapContentHeight()
+                .size(60.dp)
+                .padding(10.dp)
                 .align(alignment = Alignment.Center)
         )
     }
@@ -312,7 +335,7 @@ fun IconsRowView() {
         androidx.compose.material3.Icon(
             modifier = Modifier.size(32.dp),
             painter = painterResource(id = R.drawable.ic_search),
-            tint =  MaterialTheme.colorScheme.primary,
+            tint = MaterialTheme.colorScheme.primary,
             contentDescription = ""
         )
         androidx.compose.material3.Icon(
@@ -377,6 +400,17 @@ fun HorizontalLargeItemView(
                 data = movie
             )
         }
+    }
+}
+
+@Composable
+inline fun Modifier.noRippleClickable(
+    crossinline onClick: () -> Unit
+): Modifier = composed {
+    clickable(
+        indication = null,
+        interactionSource = remember { MutableInteractionSource() }) {
+        onClick()
     }
 }
 

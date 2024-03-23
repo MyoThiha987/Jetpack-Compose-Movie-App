@@ -75,7 +75,6 @@ fun SetLanguage(context: Context, language: String) {
 }
 
 
-
 @Composable
 private fun shouldUseDarkTheme(uiState: ScreenUiState): Boolean {
     if (uiState.isLoading) return isSystemInDarkTheme()

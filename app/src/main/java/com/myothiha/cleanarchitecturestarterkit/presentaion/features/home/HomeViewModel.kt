@@ -1,9 +1,13 @@
 package com.myothiha.cleanarchitecturestarterkit.presentaion.features.home
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
+import androidx.lifecycle.viewmodel.compose.saveable
 import com.myothiha.appbase.base.BaseViewModel
 import com.myothiha.domain.model.Movie
 import com.myothiha.domain.usecases.CacheMoviesUseCase
@@ -21,6 +25,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+   val savedStateHandle: SavedStateHandle,
     private val syncMoviesUseCase: SyncMoviesUseCase,
     private val updateMovieUseCase: UpdateMovieUseCase,
     private val cacheMoviesUseCase: CacheMoviesUseCase
@@ -35,11 +40,12 @@ class HomeViewModel @Inject constructor(
     init {
         retrieveMovies()
         syncMovies()
+
     }
 
     fun onEvent(event: ScreenUiEvent) {
         when (event) {
-            is ScreenUiEvent.Retry -> syncMovies()
+            is ScreenUiEvent.Retry -> {}
             is ScreenUiEvent.Navigate -> {
                 updateNavigateState()
             }

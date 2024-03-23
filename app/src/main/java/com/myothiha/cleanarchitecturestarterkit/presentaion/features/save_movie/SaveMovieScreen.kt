@@ -1,6 +1,7 @@
 package com.myothiha.cleanarchitecturestarterkit.presentaion.features.save_movie
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,9 +16,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.myothiha.cleanarchitecturestarterkit.R
+import com.myothiha.cleanarchitecturestarterkit.navigation.AppDestination
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.home.LoadingView
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.MovieGridItemView
 
@@ -52,29 +58,37 @@ fun SaveMovieScreen(
     paddingValues: PaddingValues
 ) {
     if (uiState.isLoading) LoadingView()
-    if (uiState.data.isNotEmpty()) {
-        Scaffold(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = paddingValues.calculateBottomPadding()),
-            contentWindowInsets = WindowInsets(16.dp, 16.dp, 16.dp, 16.dp),
-            topBar = {
-                TopAppBar(title = { Text(text = "Favourite Movies") })
-            },
-            contentColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.5f),
-        ) {
+
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = paddingValues.calculateBottomPadding()),
+        contentWindowInsets = WindowInsets(16.dp, 16.dp, 16.dp, 16.dp),
+        topBar = {
+            TopAppBar(title = { Text(text = stringResource(id = R.string.lbl_favourite)) })
+        },
+        contentColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.5f),
+    ) { padding ->
+
+        if (uiState.data.isNotEmpty()) {
             LazyVerticalGrid(
                 modifier = Modifier,
                 state = rememberLazyGridState(),
                 columns = GridCells.Fixed(2),
-                contentPadding = it,
+                contentPadding = padding,
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(items = uiState.data, key = { movie -> movie.id }) {
                     MovieGridItemView(
                         data = it,
-                        onClickDetail = {},
+                        onClickDetail = {
+                            navController.navigate(
+                                AppDestination.MovieDetailScreen.args(
+                                    movieId = it
+                                )
+                            )
+                        },
                         onClickSave = { id, isLiked, movieType ->
                             uiEvent(
                                 ScreenUiEvent.onSaveMovie(
@@ -91,7 +105,17 @@ fun SaveMovieScreen(
             }
         }
 
+        if (uiState.data.isEmpty()) ErrorView()
     }
+}
 
-
+@Composable
+fun ErrorView() {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Text(
+            modifier = Modifier.align(alignment = Alignment.Center),
+            text = stringResource(id = R.string.lbl_error),
+            style = TextStyle(color = MaterialTheme.colorScheme.onSurface)
+        )
+    }
 }

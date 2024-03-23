@@ -4,6 +4,7 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.updateTransition
+import androidx.compose.foundation.Indication
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
@@ -51,7 +52,7 @@ fun Modifier.bouncingClickable(
         }
         .clickable(
             interactionSource = interactionSource,
-            indication = null,
+            indication = null ,
             enabled = true,
             onClick = onClick
         )

@@ -70,3 +70,21 @@ fun MovieEntity.toDomain(): Movie {
         )
     }
 }
+
+fun MovieDto.toDomain(movieType: Int): Movie {
+    this.apply {
+        return Movie(
+            id = id.orZero(),
+            originalTitle = originalTitle.orEmpty(),
+            overview = overview.orEmpty(),
+            popularity = popularity.orZero(),
+            backdropPath = backdropPath.orEmpty(),
+            posterPath = posterPath.orEmpty(),
+            releaseDate = releaseDate.orEmpty(),
+            voteAverage = voteAverage.orZero(),
+            voteCount = voteCount.orZero(),
+            movieType = movieType,
+            isLiked = isLiked.orFalse()
+        )
+    }
+}
