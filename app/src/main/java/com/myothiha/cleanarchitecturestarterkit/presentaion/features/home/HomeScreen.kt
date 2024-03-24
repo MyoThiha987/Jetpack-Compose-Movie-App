@@ -1,10 +1,8 @@
 package com.myothiha.cleanarchitecturestarterkit.presentaion.features.home
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -92,7 +90,9 @@ fun HomeScreen(
             .padding(paddingValues)
             .fillMaxSize()
     ) {
-        HeaderSection()
+        HeaderSection(onClickSearch = {
+            navController.navigate(AppDestination.SearchMovieScreen.route)
+        })
         if (uiState.isLoading) LoadingView()
         if (uiState.errorMessage != null) {
             LaunchedEffect(key1 = uiState.errorMessage) {
@@ -284,7 +284,6 @@ fun TitleAndContent(
 fun LoadingView() {
     Box(modifier = Modifier.fillMaxSize()) {
         CircularProgressIndicator(
-            color = Color.Black,
             modifier = Modifier
                 .size(60.dp)
                 .padding(10.dp)
@@ -294,7 +293,7 @@ fun LoadingView() {
 }
 
 @Composable
-fun HeaderSection(modifier: Modifier = Modifier) {
+fun HeaderSection(modifier: Modifier = Modifier, onClickSearch: () -> Unit) {
     Row(
         modifier = modifier
             .padding(vertical = 16.dp)
@@ -305,7 +304,7 @@ fun HeaderSection(modifier: Modifier = Modifier) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         WelcomeView(modifier = Modifier.weight(9.8f))
-        IconsRowView()
+        IconsRowView(onClickSearch = onClickSearch)
 
     }
 }
@@ -327,13 +326,19 @@ fun WelcomeView(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun IconsRowView() {
+fun IconsRowView(
+    onClickSearch: () -> Unit
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         androidx.compose.material3.Icon(
-            modifier = Modifier.size(32.dp),
+            modifier = Modifier
+                .size(32.dp)
+                .noRippleClickable {
+                    onClickSearch()
+                },
             painter = painterResource(id = R.drawable.ic_search),
             tint = MaterialTheme.colorScheme.primary,
             contentDescription = ""

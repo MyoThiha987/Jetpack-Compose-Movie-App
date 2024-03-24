@@ -34,6 +34,7 @@ androidx-core-splashscreen = "1.0.1"
 activity = "1.8.0"
 constraintlayout = "2.1.4"
 paging="3.2.1"
+yandex-coil = "29.10.0"
 
 
 [libraries]
@@ -93,6 +94,7 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 paging-common = { group = "androidx.paging", name = "paging-common", version.ref = "paging" }
 paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
 paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
+coil = { group = "com.yandex.div", name = "coil", version.ref = "yandex-coil" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -1,7 +1,6 @@
 package com.myothiha.domain.usecases
 
 import com.myothiha.domain.repository.AppLanguageRepository
-import com.myothiha.domain.utils.coroutine.CoroutineUseCase
 import com.myothiha.domain.utils.coroutine.DispatcherProvider
 import com.myothiha.domain.utils.coroutine.FlowUseCase
 import kotlinx.coroutines.flow.Flow

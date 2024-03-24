@@ -52,7 +52,7 @@ class SeeMoreMoviesViewModel @Inject constructor(
     private fun fetchSeeMoreMovies() {
         viewModelScope.launch {
             uiState = uiState.copy(isLoading = true)
-            val data = seeMoreMoviesUseCase.execute(params = movieType).cachedIn(viewModelScope)
+            val data = seeMoreMoviesUseCase.provide(params = movieType).cachedIn(viewModelScope)
             uiState = uiState.copy(
                 isLoading = false,
                 movieType = movieType,

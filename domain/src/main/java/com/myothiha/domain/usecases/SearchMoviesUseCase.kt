@@ -1,5 +1,6 @@
 package com.myothiha.domain.usecases
 
+import androidx.paging.PagingData
 import com.myothiha.domain.model.Movie
 import com.myothiha.domain.repository.MoviesRepository
 import com.myothiha.domain.utils.coroutine.DispatcherProvider
@@ -9,13 +10,15 @@ import javax.inject.Inject
 
 /**
  * @Author myothiha
- * Created 17/03/2024 at 2:25 AM.
+ * Created 24/03/2024 at 4:06 PM.
  **/
-class FetchSavedMovieUseCase @Inject constructor(
+
+class SearchMoviesUseCase @Inject constructor(
     private val repository: MoviesRepository,
     dispatcherProvider: DispatcherProvider
-) : FlowUseCase<Unit, List<Movie>>(dispatcherProvider = dispatcherProvider) {
-    override  suspend fun provide(params: Unit): Flow<List<Movie>> {
-        return repository.retrieveSavedMovies()
+) : FlowUseCase<String, PagingData<Movie>>(dispatcherProvider = dispatcherProvider) {
+    override suspend fun provide(params: String): Flow<PagingData<Movie>> {
+        return repository.searchMovies(query = params)
     }
+
 }

@@ -1,6 +1,5 @@
 package com.myothiha.cleanarchitecturestarterkit.navigation
 
-import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
@@ -20,6 +19,8 @@ import com.myothiha.cleanarchitecturestarterkit.presentaion.features.movie_detai
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.movie_detail.MovieDetailViewModel
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.save_movie.SaveMovieScreen
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.save_movie.SaveMovieViewModel
+import com.myothiha.cleanarchitecturestarterkit.presentaion.features.search_movie.SearchMovieViewModel
+import com.myothiha.cleanarchitecturestarterkit.presentaion.features.search_movie.SearchMoviesScreen
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.seemore.SeeMoreMoviesScreen
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.seemore.SeeMoreMoviesViewModel
 import com.myothiha.domain.utils.extension.orZero
@@ -67,6 +68,18 @@ fun AppNavigation(
                 navController = navHostController,
                 viewModel = viewmodel,
                 onBackClick = { navHostController.popBackStack() },
+            )
+        }
+        composable(
+            route = AppDestination.SearchMovieScreen.route
+        ) {
+            val viewmodel: SearchMovieViewModel = hiltViewModel()
+
+            SearchMoviesScreen(
+                navController = navHostController,
+                viewModel = viewmodel,
+                onBackClick = { navHostController.popBackStack() },
+                paddingValues = paddingValues
             )
         }
     }

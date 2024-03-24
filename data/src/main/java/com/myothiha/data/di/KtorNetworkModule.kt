@@ -16,7 +16,6 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.DefaultRequest
-import io.ktor.client.plugins.HttpRequestRetry
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.DEFAULT
@@ -107,8 +106,8 @@ object KtorNetworkModule {
 
     }
 
-    fun HttpRequestBuilder.pathUrl(path: String,page : Int = 1){
-        url {
+    fun HttpRequestBuilder.pathUrl(path: String,page : Int = 1)
+    { url {
             takeFrom(Constants.BASE_URL)
             path("3", path)
             parameter("language", "en")

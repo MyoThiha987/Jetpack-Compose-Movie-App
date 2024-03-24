@@ -126,7 +126,7 @@ fun MovieDetailSheetContent(data: MovieFullDetail) {
         Text(
             text = data.movieDetail?.originalTitle.orEmpty(),
             modifier = Modifier
-                .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                .padding(top = 24.dp, start = 16.dp, end = 16.dp)
                 .fillMaxWidth(),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,

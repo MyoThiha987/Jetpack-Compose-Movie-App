@@ -15,5 +15,6 @@ interface MoviesRepository {
     suspend fun retrieveMovieDetail(movieId: Int): MovieFullDetail
     suspend fun updateSavedMovie(movieId: Int, isLiked: Boolean, movieType: Int)
     suspend fun retrieveSavedMovies(): Flow<List<Movie>>
-    fun fetchPagingMovies(movieType : Int) : Flow<PagingData<Movie>>
+    fun fetchPagingMovies(movieType: Int): Flow<PagingData<Movie>>
+    fun searchMovies(query: String): Flow<PagingData<Movie>>
 }

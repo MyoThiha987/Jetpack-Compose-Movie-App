@@ -17,6 +17,7 @@ object Constants {
     const val GET_TOP_RATED = "/movie/top_rated"
     const val GET_UPCOMING = "/movie/upcoming"
     const val GET_POPULAR = "/movie/popular"
+    const val GET_SEARCH = "search/movie"
     const val GET_MOVIE_DETAIL = "/movie/"
     const val GET_CREDITS = "/credits"
     const val UPCOMING: UpComing = 1

@@ -84,4 +84,11 @@ class MoviesRepositoryImpl @Inject constructor(
                 pagingData.map { it.toDomain(movieType = movieType) }
             }
     }
+
+    override fun searchMovies(query: String): Flow<PagingData<Movie>> {
+        return dataSource.searchMovies(query = query)
+            .map { pagingData ->
+                pagingData.map { it.toDomain(movieType = -1) }
+            }
+    }
 }
