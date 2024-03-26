@@ -128,8 +128,7 @@ fun AccountScreen(
 
         LazyColumn(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 16.dp),
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             contentPadding = it,
             verticalArrangement = Arrangement.spacedBy(16.dp)

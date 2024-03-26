@@ -29,4 +29,7 @@ interface MovieDao {
     @Query("SELECT * from movies WHERE isLiked=:isLiked")
     fun retrieveBookmarkCacheMovies(isLiked: Boolean = true): Flow<List<MovieEntity>>
 
+    @Query("SELECT id from movies WHERE isLiked=:isLiked AND movieType=:movieType ")
+    fun retrieveBookmarkedMovies(isLiked: Boolean = true,movieType: Int): List<Int>
+
 }

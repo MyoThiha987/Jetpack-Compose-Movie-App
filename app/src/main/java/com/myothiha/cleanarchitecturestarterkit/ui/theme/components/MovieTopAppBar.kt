@@ -29,6 +29,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -92,7 +93,7 @@ fun MovieTopAppBar(
             }*/
         },
         colors = TopAppBarDefaults.largeTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+            containerColor = MaterialTheme.colorScheme.surface,
         ),
     )
 }
@@ -110,7 +111,8 @@ fun MovieDetailBodySheet(
     Surface(
         modifier = modifier,
         shape = RoundedCornerShape(topStart = corner.dp, topEnd = corner.dp),
-        tonalElevation = 1.dp
+        tonalElevation = 1.dp,
+        color = MaterialTheme.colorScheme.surfaceContainer
     ) {
         MovieDetailSheetContent(data = data)
     }
@@ -189,7 +191,7 @@ fun LazyGridScope.movieInfo(data: MovieFullDetail) {
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth()
                 .background(
-                    color = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.2f),
+                    color = MaterialTheme.colorScheme.surfaceVariant,
                     shape = RoundedCornerShape(12.dp)
                 )
                 .border(

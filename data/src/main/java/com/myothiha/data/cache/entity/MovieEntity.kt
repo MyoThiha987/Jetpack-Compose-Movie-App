@@ -22,5 +22,5 @@ data class MovieEntity(
     val voteAverage: Double,
     val voteCount: Int,
     val movieType: Int,
-    val isLiked: Boolean
+    var isLiked: Boolean
 )

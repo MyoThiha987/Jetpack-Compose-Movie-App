@@ -23,6 +23,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,7 +32,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -73,6 +73,7 @@ fun HomeScreen(
 
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
@@ -132,6 +133,8 @@ fun HomeScreen(
         }*/
 
     }
+
+
 }
 
 @OptIn(ExperimentalPagerApi::class)
@@ -148,6 +151,7 @@ fun MoviesSection(
     LazyColumn(
         state = rememberLazyListState(),
         modifier = modifier.fillMaxSize(),
+        contentPadding = PaddingValues(bottom = 16.dp)
     ) {
         item {
             if (uiState.upcomingData.isNotEmpty())
@@ -201,7 +205,7 @@ fun MoviesSection(
                     },
                     content = {
                         HorizontalItemView(
-                            arrangement = Arrangement.spacedBy(12.dp),
+                            arrangement = Arrangement.spacedBy(16.dp),
                             data = uiState.nowPlayingData,
                             content = {
                                 MovieItemMediumView(
@@ -292,6 +296,7 @@ fun LoadingView() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HeaderSection(modifier: Modifier = Modifier, onClickSearch: () -> Unit) {
     Row(
@@ -317,9 +322,11 @@ fun WelcomeView(modifier: Modifier = Modifier) {
     ) {
         Text(
             modifier = Modifier.fillMaxWidth(),
-            style = TextStyle(color = MaterialTheme.colorScheme.onSurface),
+            style = TextStyle(
+                color = MaterialTheme.colorScheme.onSurface,
+            ),
+            fontSize = 20.sp,
             text = "Hi,Myo Thiha",
-            fontSize = 16.sp,
             lineHeight = 21.sp
         )
     }

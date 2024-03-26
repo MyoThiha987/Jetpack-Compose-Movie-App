@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -93,7 +94,7 @@ fun SearchMoviesContent(
                         )
                     }
                 },
-                title = { Text(text = stringResource(id = R.string.lbl_favourite)) })
+                title = { Text(text = stringResource(id = R.string.lbl_search)) })
         },
         containerColor = MaterialTheme.colorScheme.background,
     ) { padding ->
@@ -161,11 +162,15 @@ fun SearchMovieSection(
     OutlinedTextField(
         modifier = modifier
             .fillMaxWidth()
+            .wrapContentHeight()
             .clip(RoundedCornerShape(12.dp))
             .background(color = Color.Gray.copy(alpha = 0.2f)),
         shape = RoundedCornerShape(12.dp),
         textStyle = TextStyle(color = MaterialTheme.colorScheme.onSurface),
-        colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = MaterialTheme.colorScheme.onSecondary),
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            unfocusedBorderColor = MaterialTheme.colorScheme.secondary,
+        ),
         value = query,
         onValueChange = onQueryChange,
         keyboardOptions = KeyboardOptions(
@@ -182,12 +187,12 @@ fun SearchMovieSection(
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurface
+                tint = MaterialTheme.colorScheme.primary
             )
         },
         placeholder = {
             Text(
-                text = "Search Movies",
+                text = stringResource(id = R.string.lbl_search_hint),
                 style = TextStyle(color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f))
             )
         }

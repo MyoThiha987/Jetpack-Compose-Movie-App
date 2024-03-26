@@ -18,7 +18,15 @@ class MoviesCacheDataSourceImpl @Inject constructor(
     private val database: MovieDatabase
 ) : MoviesCacheDataSource {
     override suspend fun saveMovies(data: List<MovieEntity>, movieType: Int) {
+
         database.withTransaction {
+            val likedMovies = database
+                .movieDao()
+                .retrieveBookmarkedMovies(isLiked = true, movieType = movieType)
+
+            data.map {
+                if (likedMovies.contains(it.id)) it.isLiked = true
+            }
             database.movieDao().deleteCacheMovies(movieType = movieType)
             database.movieDao().saverMovies(data = data)
         }

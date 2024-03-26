@@ -1,6 +1,5 @@
 package com.myothiha.cleanarchitecturestarterkit.ui.theme.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -10,9 +9,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,13 +22,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
+import coil.request.ImageRequest
 import com.myothiha.cleanarchitecturestarterkit.R
 import com.myothiha.cleanarchitecturestarterkit.presentaion.features.home.noRippleClickable
 import com.myothiha.domain.model.Movie
@@ -53,6 +56,7 @@ fun MovieItemMediumView(
         Text(
             modifier = Modifier
                 .padding(vertical = 6.dp)
+                .padding(horizontal = 4.dp)
                 .width(239.dp)
                 .wrapContentHeight(),
             text = data.originalTitle,
@@ -70,11 +74,12 @@ fun MovieItemSmallView(
     onClickDetail: (Int) -> Unit,
     onClickSave: (Int, Boolean, Int) -> Unit
 ) {
-    Box(modifier = modifier) {
+    Box(modifier = modifier.width(180.dp)) {
         Column {
-            Card(modifier = Modifier.bouncingClickable {
-                onClickDetail(data.id)
-            }) {
+            Card(modifier = Modifier
+                .bouncingClickable {
+                    onClickDetail(data.id)
+                }) {
                 MovieImageView(
                     modifier = Modifier
                         .width(180.dp)
@@ -84,11 +89,12 @@ fun MovieItemSmallView(
             }
             Text(
                 modifier = Modifier
-                    .padding(top = 6.dp)
+                    .padding(vertical = 6.dp)
                     .padding(horizontal = 4.dp),
                 text = data.originalTitle,
-                fontSize = 18.sp,
+                fontSize = 16.sp,
                 maxLines = 1,
+                lineHeight = 18.sp,
                 fontWeight = FontWeight(200)
             )
 
@@ -120,7 +126,6 @@ fun MovieGridItemView(
     Box(
         modifier = modifier
             .fillMaxWidth()
-        //.padding(16.dp)
     ) {
         Column {
             Card(modifier = Modifier.bouncingClickable {
@@ -128,6 +133,7 @@ fun MovieGridItemView(
             }) {
                 MovieImageView(
                     modifier = Modifier
+                        .fillMaxWidth()
                         .height(160.dp),
                     data = data.posterPath
                 )
@@ -142,6 +148,7 @@ fun MovieGridItemView(
                 text = data.originalTitle,
                 fontSize = 18.sp,
                 maxLines = 1,
+                lineHeight = 21.sp,
                 fontWeight = FontWeight(200)
             )
 
@@ -189,11 +196,19 @@ fun LazyItemScope.MovieItemLargeView(
 
 @Composable
 fun <T> MovieImageView(modifier: Modifier = Modifier, data: T) {
-    AsyncImage(
-        model = "https://image.tmdb.org/t/p/original/${data}",
-        contentDescription = null,
+    val context = LocalContext.current
+    SubcomposeAsyncImage(
         modifier = modifier,
         contentScale = ContentScale.Crop,
+        model = ImageRequest.Builder(context)
+            .data("https://image.tmdb.org/t/p/original/${data}")
+            .crossfade(true).build(),
+        contentDescription = null,
+        loading = {
+            CircularProgressIndicator(
+                modifier = Modifier.wrapContentSize()
+            )
+        }
     )
 }
 

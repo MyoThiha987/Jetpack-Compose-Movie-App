@@ -21,4 +21,6 @@
     <string name="lbl_error">ဒေတာမရရှိပါ။</string>
     <string name="lbl_retry">ပြန်ကြိုးစားမယ်</string>
     <string name="lbl_favourite">ကြိုက်နှစ်သက်သော ဇာတ်ကားများ</string>
+    <string name="lbl_search">ဇာတ်ကားများရှာရန်</string>
+    <string name="lbl_search_hint">ဇာတ်ကားနာမည်ထည့်ရန်</string>
 </resources>

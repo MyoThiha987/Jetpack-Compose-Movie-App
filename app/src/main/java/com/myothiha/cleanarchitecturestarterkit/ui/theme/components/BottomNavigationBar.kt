@@ -113,7 +113,7 @@ fun RowScope.BottomNavigationBarItem(
         label = {
             Text(
                 text = stringResource(id = screen.label),
-                style = MaterialTheme.typography.labelSmall
+                style = MaterialTheme.typography.labelMedium
             )
         },
         selected = currentDestination?.hierarchy?.any {
@@ -140,7 +140,7 @@ fun RowScope.BottomNavigationBarItem(
         colors = NavigationBarItemDefaults.colors(
             selectedIconColor = Violet,
             unselectedIconColor = Green,
-            indicatorColor = Color.Transparent,
+            indicatorColor = MaterialTheme.colorScheme.onSecondary,
             selectedTextColor = Violet,
             unselectedTextColor = Green,
             disabledIconColor = Violet,
@@ -171,7 +171,7 @@ val bottomNavList = listOf(
     ),
     BottomNavigationItem(
         label = R.string.lbl_setting,
-        icon = R.drawable.ic_user,
+        icon = R.drawable.baseline_settings_24,
         route = AppDestination.AccountScreen.route
     )
 

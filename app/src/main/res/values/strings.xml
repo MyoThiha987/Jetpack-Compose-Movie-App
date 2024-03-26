@@ -20,4 +20,7 @@
     <string name="lbl_error">Fetch Error</string>
     <string name="lbl_retry">Retry</string>
     <string name="lbl_favourite">Favourite Movies</string>
+    <string name="lbl_search">Search Movies</string>
+    <string name="lbl_search_hint">Enter movie name</string>
+
 </resources>

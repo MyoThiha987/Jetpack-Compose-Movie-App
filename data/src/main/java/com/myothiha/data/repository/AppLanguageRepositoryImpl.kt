@@ -17,7 +17,7 @@ class AppLanguageRepositoryImpl @Inject constructor(
 ) : AppLanguageRepository {
     override val retrieveSelectedLanguage: Flow<String>
         get() = context.languageProtoDatStore.data.map {
-            it.language
+            it.language ?: "en"
         }
 
     override suspend fun saveSelectedLanguage(language: String) {

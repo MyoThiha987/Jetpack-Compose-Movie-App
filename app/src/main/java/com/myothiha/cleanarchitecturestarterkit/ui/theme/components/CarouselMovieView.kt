@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,9 +17,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
+import coil.request.ImageRequest
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerScope
 import com.google.accompanist.pager.PagerState
@@ -43,7 +47,7 @@ fun CarouselMovieView(
         mutableStateOf(data.map { it.backdropPath })
     }
     //val pagerState = com.google.accompanist.pager.rememberPagerState(initialPage = 0)
-    Column(modifier = modifier.padding(top = 16.dp)) {
+    Column(modifier = modifier.padding(top = 0.dp)) {
         com.google.accompanist.pager.HorizontalPager(
             modifier = Modifier
                 .fillMaxWidth()
@@ -70,6 +74,7 @@ private fun PagerScope.CarouselMovieItem(
     images: List<String>,
     isCurrentPage: Boolean
 ) {
+    val context = LocalContext.current
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
@@ -83,13 +88,29 @@ private fun PagerScope.CarouselMovieItem(
             }
             .aspectRatio(if (isCurrentPage) 16f / 9f else 16f / 8.5f)
     ) {
-        AsyncImage(
+        SubcomposeAsyncImage(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .aspectRatio(if (isCurrentPage) 16f / 9f else 16f / 8.5f),
             contentScale = ContentScale.Crop,
-            model = "https://image.tmdb.org/t/p/original/${images[currentPage]}",
-            contentDescription = "Movie Image"
+            model = ImageRequest.Builder(context)
+                .data("https://image.tmdb.org/t/p/original/${images[currentPage]}")
+                .crossfade(true)
+                .build(),
+            contentDescription = null,
+            loading = {
+                CircularProgressIndicator(
+                    modifier = Modifier.wrapContentSize()
+                )
+            }
         )
+        /* AsyncImage(
+             modifier = Modifier
+                 .fillMaxWidth(),
+             contentScale = ContentScale.Crop,
+             model = "",
+             contentDescription = "Movie Image"
+         )*/
     }
 }
 
