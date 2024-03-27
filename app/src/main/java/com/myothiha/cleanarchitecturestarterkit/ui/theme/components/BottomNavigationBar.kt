@@ -8,6 +8,7 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -30,7 +31,6 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.myothiha.cleanarchitecturestarterkit.R
 import com.myothiha.cleanarchitecturestarterkit.navigation.AppDestination
-import com.myothiha.cleanarchitecturestarterkit.ui.theme.Green
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.Violet
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 
@@ -86,7 +86,11 @@ fun NavigationBar(
 ) {
 
     Column(modifier = Modifier.fillMaxWidth()) {
-        HorizontalDivider(color = Violet, thickness = 1.dp)
+        HorizontalDivider(
+            color = Violet,
+            thickness = 1.dp,
+            modifier = Modifier.padding(vertical = 1.dp)
+        )
         androidx.compose.material3.NavigationBar(
             containerColor = MaterialTheme.colorScheme.background,
             modifier = modifier
@@ -139,10 +143,10 @@ fun RowScope.BottomNavigationBarItem(
         },
         colors = NavigationBarItemDefaults.colors(
             selectedIconColor = Violet,
-            unselectedIconColor = Green,
-            indicatorColor = MaterialTheme.colorScheme.onSecondary,
+            unselectedIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+            indicatorColor = Color.Gray.copy(alpha = 0.2f),
             selectedTextColor = Violet,
-            unselectedTextColor = Green,
+            unselectedTextColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
             disabledIconColor = Violet,
             disabledTextColor = Violet
         )
@@ -166,7 +170,7 @@ val bottomNavList = listOf(
     ),
     BottomNavigationItem(
         label = R.string.lbl_bookmark,
-        icon = R.drawable.ic_save,
+        icon = R.drawable.ic_favorite_border,
         route = AppDestination.SaveMovieScreen.route
     ),
     BottomNavigationItem(

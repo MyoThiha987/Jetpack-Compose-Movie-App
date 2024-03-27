@@ -1,6 +1,7 @@
 package com.myothiha.cleanarchitecturestarterkit.ui.theme.components
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +13,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonColors
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -36,11 +38,13 @@ fun RadioButtonText(
                 role = Role.RadioButton,
                 onClick = onClick
             )
-            .padding(12.dp)
-            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 10.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        RadioButton(selected = isSelected, onClick = null, colors = colors)
-        Spacer(modifier = Modifier.width(8.dp))
         SingleLineText(text = stringResource(id = textRes), shouldUseMarquee = true)
+        RadioButton(selected = isSelected, onClick = null, colors = colors)
+
+
     }
 }
