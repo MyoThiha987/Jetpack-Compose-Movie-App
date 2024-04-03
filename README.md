@@ -4,6 +4,16 @@ Here is another movie app but rewritten in clean architecture with jetpack compo
 
 the app is still a work-in-progress and there are some features that are not yet implemented.
 
+## Tech stack
+- [Clean Architecture](https://medium.com/@samra.sajjad0001/flutter-clean-architecture-5de5e9b8d093)
+- [Dio](https://pub.dev/packages/dio)
+- [Retorfit](https://pub.dev/packages/retrofit)
+- [Hive](https://pub.dev/packages/hive)
+- [GetX](https://pub.dev/packages/get)
+- [Uuid](https://pub.dev/packages/uuid)
+- [Chuck](https://pub.dev/packages/chuck_interceptor)
+- [Stream Transformer](https://pub.dev/packages/stream_transform)
+
 ## Screenshots
 <p align="center">
   <img src="https://github.com/MyoThiha987/Clean-Architecture/blob/main/screenshots/Screenshot_2024_04_03_21_59_04_011_com_myothiha_cleanarchitecturestarterkit.jpg" width="20%" />
@@ -29,13 +39,3 @@ the app is still a work-in-progress and there are some features that are not yet
 - ❌ History feature.
 
 ✅ Implemented     ❌ Not yet Implemented
-
-
-## Tech Stack
-|                 |                                                |
-|-----------------|------------------------------------------------|
-| 🎭 UI           | Jetpack Compose UI                             |
-| 🏗️ Architecture | MVI architecture                               |
-| 📦 Presenters   | [Molecule](https://github.com/cashapp/molecule)                                   |
-| 🛢 Database     | [Sqldelight](https://github.com/cashapp/sqldelight) |
-| 🌐 Networking   | [Ktor](https://github.com/ktorio/ktor) |
