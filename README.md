@@ -39,4 +39,6 @@ the app is still a work-in-progress and there are some features that are not yet
   <img src="https://github.com/MyoThiha987/Clean-Architecture/blob/main/screenshots/Screenshot_2024_04_03_23_55_59_874_com_myothiha_cleanarchitecturestarterkit.jpg" width="20%" />
   <img src="https://github.com/MyoThiha987/Clean-Architecture/blob/main/screenshots/Screenshot_2024_04_03_22_00_16_657_com_myothiha_cleanarchitecturestarterkit.jpg" width="20%" />
   <img src="https://github.com/MyoThiha987/Clean-Architecture/blob/main/screenshots/Screenshot_2024_04_03_22_01_20_432_com_myothiha_cleanarchitecturestarterkit.jpg" width="20%" />
+  <img src="https://github.com/MyoThiha987/Clean-Architecture/blob/main/screenshots/Screenshot_2024_04_03_22_00_26_184_com_myothiha_cleanarchitecturestarterkit.jpg" width="20%" />
+  <img src="https://github.com/MyoThiha987/Clean-Architecture/blob/main/screenshots/Screenshot_2024_04_03_22_00_55_245_com_myothiha_cleanarchitecturestarterkit.jpg" width="20%" />
 </p>
