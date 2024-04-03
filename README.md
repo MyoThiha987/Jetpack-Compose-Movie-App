@@ -3,7 +3,7 @@ the app is still a work-in-progress and there are some features that are not yet
 
 ## Screenshots
 <p align="center">
-  <img src="https://github.com/mr3y-the-programmer/Podcaster/assets/26522145/5eb58fb3-0904-4e9a-a294-ca64e4aeec92" width="20%" />
+  <img src="https://github.com/MyoThiha987/Clean-Architecture/blob/main/screenshots/Screenshot_2024_04_03_21_59_04_011_com_myothiha_cleanarchitecturestarterkit.jpg" width="20%" />
   <img src="https://github.com/mr3y-the-programmer/Podcaster/assets/26522145/9a73ad83-c9f4-4ef5-a167-45df071a9fea" width="20%" />
   <img src="https://github.com/mr3y-the-programmer/Podcaster/assets/26522145/a3705145-d61d-4071-929b-ef33009b8a93" width="20%" />
   <img src="https://github.com/mr3y-the-programmer/Podcaster/assets/26522145/6ab62293-0ae7-49b2-995e-c06e83fcd94e" width="20%" />
