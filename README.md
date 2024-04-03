@@ -1,33 +1,32 @@
-# Movie App (Clean Architecture)
+# Movie App (Modularize Clean Architecture)
 
-Here is another movie app but rewritten in clean architecture with jetpack compose.
+Here is another movie app but rewritten in modularize clean architecture with jetpack compose.
 
 the app is still a work-in-progress and there are some features that are not yet implemented.
 
 ## Features
-- ✅ Access to millions of podcasts.
-- ✅ Subscribe to a podcast by RSS feed url.
-- ✅ Select episode's playback speed.
-- ✅ Download episodes to play them offline.
-- ✅ Automatic background refreshing/syncing of your subscriptions.
-- ✅ Support for playlists (Queue feature)
-- ✅ Continue playing episodes from where you left off.
+- ✅ Support Offfline first for Home Screen Movies.
+- ✅ Favourite Movies.
+- ✅ Change Multiple Languages.
 - ✅ Material 3 dynamic theming & light/dark theme.
-- ✅ Import/Export your subscriptions from/to OPML.
-- ❌ Improving support for RTL languages & adding more translations.
-- ❌ History feature.
+- ✅ Support for searching movies.
+- ✅ Support for viewing all movies
+- ✅ Material 3 dynamic theming & light/dark theme.
+- ✅ Movie Details.
+- ❌ Notification Features with Deep Links.
 
 ✅ Implemented     ❌ Not yet Implemented
 
 ## Tech stack
-- [Clean Architecture](https://medium.com/@samra.sajjad0001/flutter-clean-architecture-5de5e9b8d093)
-- [Dio](https://pub.dev/packages/dio)
-- [Retorfit](https://pub.dev/packages/retrofit)
-- [Hive](https://pub.dev/packages/hive)
-- [GetX](https://pub.dev/packages/get)
-- [Uuid](https://pub.dev/packages/uuid)
-- [Chuck](https://pub.dev/packages/chuck_interceptor)
-- [Stream Transformer](https://pub.dev/packages/stream_transform)
+- [Clean Architecture](https://developer.android.com/topic/architecture#recommended-app-arch)
+- [Dependency Injection](https://developer.android.com/training/dependency-injection/hilt-android)
+- [Paging Library](https://developer.android.com/topic/libraries/architecture/paging/v3-overview)
+- [Ktor](https://ktor.io)
+- [Room Database](https://developer.android.com/reference/android/arch/persistence/room/RoomDatabase)
+- [Jetpack Compose](https://developer.android.com/develop/ui/compose)
+- [Coroutine](https://developer.android.com/kotlin/coroutines)
+- [Navigation Component](https://developer.android.com/develop/ui/compose/navigation)
+- [Proto Datastore](https://developer.android.com/topic/libraries/architecture/datastore)
 
 ## Screenshots
 <p align="center">
