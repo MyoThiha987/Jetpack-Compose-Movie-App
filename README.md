@@ -1,4 +1,7 @@
-A podcast listening app that showcases using Jetpack Media 3 in a real, offline-first app.
+# Movie App (Clean Architecture)
+
+Here is another movie app but rewritten in clean architecture with jetpack compose.
+
 the app is still a work-in-progress and there are some features that are not yet implemented.
 
 ## Screenshots
