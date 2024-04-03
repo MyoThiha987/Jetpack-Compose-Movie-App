@@ -57,6 +57,7 @@ object KtorNetworkModule {
             prettyPrint = true
             ignoreUnknownKeys = true
             explicitNulls = false
+            coerceInputValues = true
 
         })
 

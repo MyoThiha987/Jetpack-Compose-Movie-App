@@ -12,7 +12,7 @@
     <string name="lbl_nowplaying">ယခုပြသနေသော ဇာတ်ကားများ</string>
     <string name="lbl_toprate">လူကြည့်များသော ဇာတ်ကားများ</string>
     <string name="lbl_popular">လူကြိုက်များသော ဇာတ်ကားများ</string>
-    <string name="lbl_seemore">ကြည့်ရန်</string>
+    <string name="lbl_seemore">အားလုံးကြည့်ရန်</string>
     <string name="lbl_theme">Theme</string>
     <string name="lbl_language">ဘာသာစကား</string>
     <string name="lbl_general">အထွေထွေ</string>

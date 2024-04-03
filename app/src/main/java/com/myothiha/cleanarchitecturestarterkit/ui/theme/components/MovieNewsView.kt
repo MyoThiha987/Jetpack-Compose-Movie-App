@@ -84,7 +84,7 @@ fun MovieItemSmallView(
                     modifier = Modifier
                         .width(180.dp)
                         .height(180.dp),
-                    data = data.posterPath
+                    data = data.backdropPath
                 )
             }
             Text(
@@ -135,7 +135,7 @@ fun MovieGridItemView(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(160.dp),
-                    data = data.posterPath
+                    data = data.backdropPath
                 )
             }
             Text(

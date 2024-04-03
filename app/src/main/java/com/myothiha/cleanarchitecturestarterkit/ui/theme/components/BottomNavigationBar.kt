@@ -86,11 +86,6 @@ fun NavigationBar(
 ) {
 
     Column(modifier = Modifier.fillMaxWidth()) {
-        HorizontalDivider(
-            color = Violet,
-            thickness = 1.dp,
-            modifier = Modifier.padding(vertical = 1.dp)
-        )
         androidx.compose.material3.NavigationBar(
             containerColor = MaterialTheme.colorScheme.background,
             modifier = modifier

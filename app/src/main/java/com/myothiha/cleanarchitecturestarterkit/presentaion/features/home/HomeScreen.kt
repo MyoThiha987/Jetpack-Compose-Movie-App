@@ -28,6 +28,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -148,15 +150,31 @@ fun MoviesSection(
     onClickSeeMore: (Int) -> Unit
 ) {
 
+    val carouselList by remember {
+       mutableStateOf(uiState.upcomingData)
+    }
+
+    val nowPlayingList by remember {
+        mutableStateOf(uiState.nowPlayingData)
+    }
+
+    val topRateList by remember {
+        mutableStateOf(uiState.topRatedData)
+    }
+
+    val popularList by remember {
+        mutableStateOf(uiState.popularData)
+    }
+
     LazyColumn(
         state = rememberLazyListState(),
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(bottom = 16.dp)
     ) {
         item {
-            if (uiState.upcomingData.isNotEmpty())
+            if (carouselList.isNotEmpty())
                 CarouselMovieView(data = uiState.upcomingData)
-            if (uiState.nowPlayingData.isNotEmpty())
+            if (nowPlayingList.isNotEmpty())
                 CategoryAndContent(
                     text = stringResource(id = R.string.lbl_nowplaying),
                     movieType = 2,
@@ -180,7 +198,7 @@ fun MoviesSection(
                         )
                     }
                 )
-            if (uiState.topRatedData.isNotEmpty()) CategoryAndContent(
+            if (topRateList.isNotEmpty()) CategoryAndContent(
                 text = stringResource(id = R.string.lbl_toprate),
                 movieType = 3,
                 onClickSeeMore = {
@@ -196,7 +214,7 @@ fun MoviesSection(
                     )
                 }
             )
-            if (uiState.popularData.isNotEmpty()) {
+            if (popularList.isNotEmpty()) {
                 CategoryAndContent(
                     text = stringResource(id = R.string.lbl_popular),
                     movieType = 4,
@@ -237,13 +255,14 @@ fun CategoryAndContent(
         ) {
             Text(
                 text = text,
-                style = MaterialTheme.typography.titleMedium.copy(fontSize = 18.sp),
+                style = MaterialTheme.typography.titleMedium.copy(fontSize = 16.sp),
                 modifier = Modifier
                     .paddingFromBaseline(top = 16.dp)
                     .padding(horizontal = 16.dp)
             )
             Text(
                 text = stringResource(id = R.string.lbl_seemore),
+                style  = MaterialTheme.typography.titleMedium.copy(fontSize = 12.sp),
                 modifier = Modifier
                     .noRippleClickable { onClickSeeMore(movieType) }
                     .paddingFromBaseline(top = 16.dp)

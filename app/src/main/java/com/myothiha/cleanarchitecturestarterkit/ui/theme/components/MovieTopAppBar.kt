@@ -286,7 +286,7 @@ fun LazyGridScope.crewItem(data: MovieFullDetail) {
         }
     ) {
         TitleAndContent(
-            title = "Company",
+            title = "Crew",
             content = {
                 HorizontalItemView(
                     data = data.credit?.crew.orEmpty(),

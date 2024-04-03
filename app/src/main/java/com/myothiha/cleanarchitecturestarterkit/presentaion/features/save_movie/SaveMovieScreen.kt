@@ -72,7 +72,7 @@ fun SaveMovieScreen(
 
         if (uiState.data.isNotEmpty()) {
             LazyVerticalGrid(
-                modifier = Modifier,
+                modifier = Modifier.fillMaxSize(),
                 state = rememberLazyGridState(),
                 columns = GridCells.Fixed(2),
                 contentPadding = padding,

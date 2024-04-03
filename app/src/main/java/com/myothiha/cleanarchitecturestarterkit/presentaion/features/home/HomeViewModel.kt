@@ -1,5 +1,7 @@
 package com.myothiha.cleanarchitecturestarterkit.presentaion.features.home
 
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -14,6 +16,7 @@ import com.myothiha.domain.usecases.CacheMoviesUseCase
 import com.myothiha.domain.usecases.SyncMoviesUseCase
 import com.myothiha.domain.usecases.UpdateMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -82,7 +85,8 @@ class HomeViewModel @Inject constructor(
 
     private fun retrieveMovies() {
         viewModelScope.launch {
-            cacheMoviesUseCase.execute(params = Unit).collectLatest {
+            cacheMoviesUseCase.execute(params = Unit)
+                .collectLatest {
                 val upComingData = it.filter { it.movieType == 1 }
                 val nowPlayingData = it.filter { it.movieType == 2 }
                 val topRatedData = it.filter { it.movieType == 3 }
@@ -108,6 +112,7 @@ sealed class ScreenUiEvent {
         ScreenUiEvent()
 }
 
+@Immutable
 data class ScreenUiState(
     var isLoading: Boolean = false,
     val upcomingData: List<Movie> = emptyList(),
