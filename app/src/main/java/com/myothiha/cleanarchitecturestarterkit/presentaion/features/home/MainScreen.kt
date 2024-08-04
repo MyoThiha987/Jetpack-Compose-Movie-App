@@ -1,10 +1,14 @@
 package com.myothiha.cleanarchitecturestarterkit.presentaion.features.home
 
+import android.util.Log
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavHostController
 import com.myothiha.cleanarchitecturestarterkit.navigation.AppNavigation
+import com.myothiha.cleanarchitecturestarterkit.presentaion.features.accout.ScreenUiState
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.BottomNavigationBar
 
 /**
@@ -13,17 +17,24 @@ import com.myothiha.cleanarchitecturestarterkit.ui.theme.components.BottomNaviga
  **/
 
 @Composable
-fun MainScreen(navController: NavHostController) {
-
+fun MainScreen(
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    uiState: ScreenUiState
+) {
     Scaffold(
         topBar = {},
         bottomBar = {
-            BottomNavigationBar(navController = navController)
+            BottomNavigationBar(
+                uiState =uiState,
+                navController = navController
+            )
         }
     ) { innerPaddings ->
 
         AppNavigation(navHostController = navController, paddingValues = innerPaddings)
 
     }
+
 
 }

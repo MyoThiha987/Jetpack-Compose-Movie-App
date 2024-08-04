@@ -1,15 +1,15 @@
 [versions]
-agp = "8.2.2"
-org-jetbrains-kotlin-android = "1.9.0"
+agp = "8.5.0"
+org-jetbrains-kotlin-android = "2.0.0"
 core-ktx = "1.12.0"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 lifecycle-runtime-ktx = "2.7.0"
 activity-compose = "1.8.2"
-compose-bom = "2024.02.01"
-org-jetbrains-kotlin-jvm = "1.9.0"
-devtools-ksp = "1.9.0-1.0.12"
+compose-bom = "2024.06.00"
+org-jetbrains-kotlin-jvm = "1.9.22"
+devtools-ksp = "2.0.0-1.0.22"
 ktor = "2.3.7"
 chucker = "4.0.0"
 coil = "2.5.0"
@@ -33,9 +33,9 @@ protobuf = "0.9.4"
 androidx-core-splashscreen = "1.0.1"
 activity = "1.8.0"
 constraintlayout = "2.1.4"
-paging="3.2.1"
+paging = "3.2.1"
 yandex-coil = "29.10.0"
-
+mockk = "1.13.12"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -95,6 +95,7 @@ paging-common = { group = "androidx.paging", name = "paging-common", version.ref
 paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
 paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
 coil = { group = "com.yandex.div", name = "coil", version.ref = "yandex-coil" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -105,10 +106,12 @@ devToolsKsp = { id = "com.google.devtools.ksp", version.ref = "devtools-ksp" }
 hiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 googleProtobuf = { id = "com.google.protobuf", version.ref = "protobuf" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "org-jetbrains-kotlin-android" }
+
 
 [bundles]
 coroutine = ["coroutines-android", "coroutines-core", "coroutines-play-services", "coroutines-test", "core-ktx"]
 room = ["room-ktx", "room-runtime", "room-paging"]
 ktor = ["ktor-client-android", "ktor-client-core", "ktor-client-negotiation", "ktor-client-okhttp", "ktor-logging"]
 accompanish-pager = ["accompanish-pager", "accompanish-pager-indicator"]
-compose-paging =["paging-common","paging-runtime","paging-compose"]
+compose-paging = ["paging-common", "paging-runtime", "paging-compose"]

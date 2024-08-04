@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.kotlinXSerialization)
     alias(libs.plugins.devToolsKsp)
     alias(libs.plugins.hiltAndroid)
+    alias(libs.plugins.compose.compiler)
+
 }
 
 android {
@@ -44,7 +46,10 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.14"
+    }
+    composeCompiler {
+        enableStrongSkippingMode = true
     }
     packaging {
         resources {
@@ -87,6 +92,7 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.accompanist.systemuicontroller)
     testImplementation(libs.junit)
+    testImplementation(libs.mockk)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))

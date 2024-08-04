@@ -21,6 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -31,6 +32,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.myothiha.cleanarchitecturestarterkit.R
 import com.myothiha.cleanarchitecturestarterkit.navigation.AppDestination
+import com.myothiha.cleanarchitecturestarterkit.presentaion.features.accout.ScreenUiState
 import com.myothiha.cleanarchitecturestarterkit.ui.theme.Violet
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 
@@ -40,7 +42,8 @@ import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
  **/
 @Composable
 fun BottomNavigationBar(
-    navController: NavController,
+    uiState: ScreenUiState,
+    navController: NavController
 ) {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStackEntry?.destination
@@ -67,7 +70,7 @@ fun BottomNavigationBar(
         ),
     ) {
         NavigationBar(
-            modifier = Modifier,
+            uiState =uiState,
             navItemList = nav,
             navDestination = currentDestination,
             navController = navController
@@ -79,6 +82,7 @@ fun BottomNavigationBar(
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
 fun NavigationBar(
+    uiState: ScreenUiState,
     modifier: Modifier = Modifier,
     navItemList: androidx.compose.runtime.State<List<BottomNavigationItem>>,
     navDestination: NavDestination?,
@@ -92,6 +96,7 @@ fun NavigationBar(
         ) {
             navItemList.value.forEach { destination ->
                 BottomNavigationBarItem(
+                    uiState = uiState,
                     screen = destination,
                     currentDestination = navDestination,
                     navController = navController
@@ -104,6 +109,7 @@ fun NavigationBar(
 
 @Composable
 fun RowScope.BottomNavigationBarItem(
+    uiState: ScreenUiState,
     screen: BottomNavigationItem,
     currentDestination: NavDestination?,
     navController: NavController
@@ -111,6 +117,7 @@ fun RowScope.BottomNavigationBarItem(
     NavigationBarItem(
         label = {
             Text(
+                modifier = Modifier.testTag(uiState.data.language),
                 text = stringResource(id = screen.label),
                 style = MaterialTheme.typography.labelMedium
             )

@@ -2,6 +2,7 @@ package com.myothiha.cleanarchitecturestarterkit
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -13,9 +14,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
@@ -44,19 +47,22 @@ class MainActivity : ComponentActivity() {
             val systemUiController = rememberSystemUiController()
             val darkTheme = shouldUseDarkTheme(uiState = uiState)
 
-            LaunchedEffect(systemUiController, darkTheme) {
-                systemUiController.systemBarsDarkContentEnabled = !darkTheme
-            }
-
-            SetLanguage(context = applicationContext, language = uiState.data.language)
-
             CleanArchitectureStarterKitTheme(darkTheme = darkTheme) {
+               val modifier = Modifier.testTag(uiState.data.language)
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = modifier,
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    LaunchedEffect(systemUiController, darkTheme) {
+                        systemUiController.systemBarsDarkContentEnabled = !darkTheme
+                    }
+                    SetLanguage(context = applicationContext, language = uiState.data.language)
                     val navController = rememberNavController()
-                    MainScreen(navController = navController)
+                    MainScreen(
+                        navController = navController,
+                        uiState = uiState,
+                        modifier = Modifier.then(modifier)
+                    )
                 }
             }
         }

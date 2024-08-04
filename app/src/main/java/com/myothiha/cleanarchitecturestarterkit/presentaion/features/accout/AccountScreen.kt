@@ -27,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -81,7 +82,12 @@ fun AccountScreen(
             .padding(bottom = paddingValues.calculateBottomPadding()),
         contentWindowInsets = WindowInsets(16.dp, 16.dp, 16.dp, 16.dp),
         topBar = {
-            TopAppBar(title = { Text(text = stringResource(id = R.string.lbl_setting)) })
+            TopAppBar(title = {
+                Text(
+                    text = stringResource(id = R.string.lbl_setting),
+                    modifier = Modifier.testTag(uiState.data.language)
+                )
+            })
         },
         contentColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.5f),
     ) {
@@ -117,7 +123,7 @@ fun AccountScreen(
                                         )
                                     )
                                     showBottomSheet = false
-                                    context.restartActivity()
+                                    //context.restartActivity()
                                 }
                             }
                         )
@@ -136,7 +142,9 @@ fun AccountScreen(
             item {
                 ProfileView()
                 Spacer(modifier = Modifier.height(24.dp))
-                SettingView(title = R.string.lbl_general,
+                SettingView(
+                    modifier = Modifier.testTag(uiState.data.language),
+                    title = R.string.lbl_general,
                     content = {
                         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                             SettingItemView(
@@ -164,12 +172,16 @@ fun AccountScreen(
                         }
                     })
                 Spacer(modifier = Modifier.height(24.dp))
-                SettingView(title = R.string.lbl_security,
+                SettingView(
+                    modifier = Modifier.testTag(uiState.data.language),
+                    title = R.string.lbl_security,
                     content = {
                         SettingItemView(
-                            modifier = Modifier.noRippleClickable {
-                                // showBottomSheet = true
-                            },
+                            modifier = Modifier
+                                .noRippleClickable {
+                                    // showBottomSheet = true
+                                }
+                                .testTag(uiState.data.language),
                             title = R.string.lbl_fingerprint,
                             subtitle = uiState.data.language,
                             isShowSubtitle = false,
@@ -178,59 +190,6 @@ fun AccountScreen(
                         )
                     })
             }
-            /*item {
-                RadioButtonText(
-                    textRes = R.string.theme_system,
-                    isSelected = uiState.data.theme == Theme.SYSTEM,
-                    onClick = { uiEvent(ScreenUiEvent.onSelectTheme(Theme.SYSTEM)) }
-                )
-                RadioButtonText(
-                    textRes = R.string.theme_light,
-                    isSelected = uiState.data.theme == Theme.LIGHT,
-                    onClick = { uiEvent(ScreenUiEvent.onSelectTheme(Theme.LIGHT)) }
-                )
-                RadioButtonText(
-                    textRes = R.string.theme_dark,
-                    isSelected = uiState.data.theme == Theme.DARK,
-                    onClick = { uiEvent(ScreenUiEvent.onSelectTheme(Theme.DARK)) }
-                )
-            }
-            item {
-                RadioButtonText(
-                    textRes = R.string.language_en,
-                    isSelected = uiState.data.language == "en",
-                    onClick = {
-                        scope.launch {
-                            uiEvent(
-                                ScreenUiEvent.onSelectLanguage(
-                                    context = context,
-                                    language = "en"
-                                )
-                            )
-                            context.restartActivity()
-                        }
-
-
-                    }
-                )
-                RadioButtonText(
-                    textRes = R.string.language_myanmar,
-                    isSelected = uiState.data.language == "my",
-                    onClick = {
-                        scope.launch {
-                            uiEvent(
-                                ScreenUiEvent.onSelectLanguage(
-                                    context = context,
-                                    language = "my"
-                                )
-                            )
-                            context.restartActivity()
-                        }
-                    }
-
-                )
-
-            }*/
         }
     }
 
